@@ -3,6 +3,7 @@ package com.devcrawlers.conference.management.controller;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -12,18 +13,22 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.devcrawlers.conference.management.model.User;
 import com.devcrawlers.conference.management.resource.SuccessAndErrorDetailsResource;
 import com.devcrawlers.conference.management.resource.UserAddResource;
+import com.devcrawlers.conference.management.resource.UserUpdateResource;
 import com.devcrawlers.conference.management.service.UserService;
+import com.devcrawlers.conference.management.util.MessageProperties;
 
 @RestController
 @RequestMapping(value = "/user")
 @CrossOrigin(origins = "*")
-public class UserController {
+public class UserController extends MessageProperties {
 
 	@Autowired
 	private Environment environment;
@@ -39,7 +44,7 @@ public class UserController {
 		if (!user.isEmpty()) {
 			return new ResponseEntity<>((Collection<User>) user, HttpStatus.OK);
 		} else {
-			responseMessage.setMessages(environment.getProperty("Records not found."));
+			responseMessage.setMessages(environment.getProperty(RECORD_NOT_FOUND));
 			return new ResponseEntity<>(responseMessage, HttpStatus.NO_CONTENT);
 		}
 	}
@@ -51,7 +56,7 @@ public class UserController {
 		if (isPresentUser.isPresent()) {
 			return new ResponseEntity<>(isPresentUser, HttpStatus.OK);
 		} else {
-			responseMessage.setMessages(environment.getProperty("Record not found."));
+			responseMessage.setMessages(environment.getProperty(RECORD_NOT_FOUND));
 			return new ResponseEntity<>(responseMessage, HttpStatus.NO_CONTENT);
 		}
 	}
@@ -59,11 +64,19 @@ public class UserController {
 	@PostMapping(value = "/save")
 	public ResponseEntity<Object> addUser(@RequestBody UserAddResource userAddResource) {
 		Integer userId = userService.saveUser(userAddResource);
-		SuccessAndErrorDetailsResource successDetailsDto = new SuccessAndErrorDetailsResource("Successfully Created.", userId.toString());
+		SuccessAndErrorDetailsResource successDetailsDto = new SuccessAndErrorDetailsResource(RECORD_CREATED, userId.toString());
 		return new ResponseEntity<>(successDetailsDto, HttpStatus.CREATED);
 	}
 	
-	@DeleteMapping(value = "/delete/{id}")
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<Object> updateUser(@PathVariable(value = "id", required = true) int id,
+			@RequestBody UserUpdateResource userUpdateResource) {
+		User user = userService.updateUser(id, userUpdateResource);
+		SuccessAndErrorDetailsResource successDetailsDto = new SuccessAndErrorDetailsResource(RECORD_UPDATED, user);
+		return new ResponseEntity<>(successDetailsDto, HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Object> deleteUser(@PathVariable(value = "id", required = true) int id) {
 		String message = userService.deleteUser(id);
 		SuccessAndErrorDetailsResource successDetailsDto = new SuccessAndErrorDetailsResource(message);

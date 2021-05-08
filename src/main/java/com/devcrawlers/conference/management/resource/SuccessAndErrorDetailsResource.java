@@ -16,6 +16,9 @@ public class SuccessAndErrorDetailsResource {
 	
 	@JsonProperty("value")
 	private String value;
+	
+	@JsonProperty("response")
+	private Object response;
 
 	public String getMessages() {
 		return messages;
@@ -48,6 +51,14 @@ public class SuccessAndErrorDetailsResource {
 	public void setValue(String value) {
 		this.value = value;
 	}
+	
+	public Object getResponse() {
+		return response;
+	}
+
+	public void setResponse(Object response) {
+		this.response = response;
+	}
 
 	public SuccessAndErrorDetailsResource() {
 		super();
@@ -62,6 +73,12 @@ public class SuccessAndErrorDetailsResource {
 		super();
 		this.messages = messages;
 		this.value = value;
+	}
+
+	public SuccessAndErrorDetailsResource(String messages, Object response) {
+		super();
+		this.messages = messages;
+		this.response = response;
 	}
 
 }
