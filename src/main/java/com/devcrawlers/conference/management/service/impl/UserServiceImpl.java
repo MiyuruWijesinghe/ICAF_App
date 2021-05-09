@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,12 +17,14 @@ import com.devcrawlers.conference.management.resource.UserAddResource;
 import com.devcrawlers.conference.management.resource.UserUpdateResource;
 import com.devcrawlers.conference.management.service.UserService;
 import com.devcrawlers.conference.management.util.IdGenerator;
-import com.devcrawlers.conference.management.util.MessageProperties;
 
 @Component
 @Transactional(rollbackFor=Exception.class)
-public class UserServiceImpl extends MessageProperties implements UserService {
+public class UserServiceImpl implements UserService {
 
+	@Autowired
+	private Environment environment;
+	
 	@Autowired
 	private UserRepository userRepository;
 
@@ -66,7 +69,7 @@ public class UserServiceImpl extends MessageProperties implements UserService {
 		
 		Optional<User> isPresentUser = userRepository.findById(id);
 		if (!isPresentUser.isPresent()) {
-			throw new NoRecordFoundException(RECORD_NOT_FOUND);
+			throw new NoRecordFoundException(environment.getProperty("common.record-not-found"));
 		}
 		
 		User user = isPresentUser.get();
@@ -80,11 +83,11 @@ public class UserServiceImpl extends MessageProperties implements UserService {
 	public String deleteUser(int id) {
 		Optional<User> isPresentUser = userRepository.findById(id);
 		if (!isPresentUser.isPresent()) {
-			throw new NoRecordFoundException(RECORD_NOT_FOUND);
+			throw new NoRecordFoundException(environment.getProperty("common.record-not-found"));
 		}
 		
 		userRepository.deleteById(id);
-		return COMMON_DELETED + id;
+		return environment.getProperty("common.deleted") + id;
 	}
 
 }

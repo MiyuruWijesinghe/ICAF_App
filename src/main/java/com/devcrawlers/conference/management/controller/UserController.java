@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -23,12 +25,11 @@ import com.devcrawlers.conference.management.resource.SuccessAndErrorDetailsReso
 import com.devcrawlers.conference.management.resource.UserAddResource;
 import com.devcrawlers.conference.management.resource.UserUpdateResource;
 import com.devcrawlers.conference.management.service.UserService;
-import com.devcrawlers.conference.management.util.MessageProperties;
 
 @RestController
 @RequestMapping(value = "/user")
 @CrossOrigin(origins = "*")
-public class UserController extends MessageProperties {
+public class UserController {
 
 	@Autowired
 	private Environment environment;
@@ -44,7 +45,7 @@ public class UserController extends MessageProperties {
 		if (!user.isEmpty()) {
 			return new ResponseEntity<>((Collection<User>) user, HttpStatus.OK);
 		} else {
-			responseMessage.setMessages(environment.getProperty(RECORD_NOT_FOUND));
+			responseMessage.setMessages(environment.getProperty("common.record-not-found"));
 			return new ResponseEntity<>(responseMessage, HttpStatus.NO_CONTENT);
 		}
 	}
@@ -56,23 +57,23 @@ public class UserController extends MessageProperties {
 		if (isPresentUser.isPresent()) {
 			return new ResponseEntity<>(isPresentUser, HttpStatus.OK);
 		} else {
-			responseMessage.setMessages(environment.getProperty(RECORD_NOT_FOUND));
+			responseMessage.setMessages(environment.getProperty("common.record-not-found"));
 			return new ResponseEntity<>(responseMessage, HttpStatus.NO_CONTENT);
 		}
 	}
 	
 	@PostMapping(value = "/save")
-	public ResponseEntity<Object> addUser(@RequestBody UserAddResource userAddResource) {
+	public ResponseEntity<Object> addUser(@Valid @RequestBody UserAddResource userAddResource) {
 		Integer userId = userService.saveUser(userAddResource);
-		SuccessAndErrorDetailsResource successDetailsDto = new SuccessAndErrorDetailsResource(RECORD_CREATED, userId.toString());
+		SuccessAndErrorDetailsResource successDetailsDto = new SuccessAndErrorDetailsResource(environment.getProperty("common.saved"), userId.toString());
 		return new ResponseEntity<>(successDetailsDto, HttpStatus.CREATED);
 	}
 	
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<Object> updateUser(@PathVariable(value = "id", required = true) int id,
-			@RequestBody UserUpdateResource userUpdateResource) {
+			@Valid @RequestBody UserUpdateResource userUpdateResource) {
 		User user = userService.updateUser(id, userUpdateResource);
-		SuccessAndErrorDetailsResource successDetailsDto = new SuccessAndErrorDetailsResource(RECORD_UPDATED, user);
+		SuccessAndErrorDetailsResource successDetailsDto = new SuccessAndErrorDetailsResource(environment.getProperty("common.updated"), user);
 		return new ResponseEntity<>(successDetailsDto, HttpStatus.OK);
 	}
 	
