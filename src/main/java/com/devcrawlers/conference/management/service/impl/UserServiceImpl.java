@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
 			userIdList.add(userObject.getId());
 		}
 		
-		return IdGenerator.generateUserIDs(userIdList);	
+		return IdGenerator.generateIDs(userIdList);	
 	}
 	
 	@Override
@@ -87,7 +87,7 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		userRepository.deleteById(id);
-		return environment.getProperty("common.deleted") + id;
+		return environment.getProperty("user.deleted");
 	}
 
 }

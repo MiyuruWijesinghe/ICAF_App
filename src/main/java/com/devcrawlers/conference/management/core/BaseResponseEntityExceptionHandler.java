@@ -19,6 +19,8 @@ import com.devcrawlers.conference.management.exception.InvalidServiceIdException
 import com.devcrawlers.conference.management.exception.NoRecordFoundException;
 import com.devcrawlers.conference.management.exception.UserNotFoundException;
 import com.devcrawlers.conference.management.exception.ValidateRecordException;
+import com.devcrawlers.conference.management.resource.RolesAddResource;
+import com.devcrawlers.conference.management.resource.RolesUpdateResource;
 import com.devcrawlers.conference.management.resource.SuccessAndErrorDetailsResource;
 import com.devcrawlers.conference.management.resource.UserAddResource;
 import com.devcrawlers.conference.management.resource.UserUpdateResource;
@@ -98,6 +100,22 @@ public class BaseResponseEntityExceptionHandler extends ResponseEntityExceptionH
 					sField.set(userUpdateResource.getClass().cast(userUpdateResource), error.getDefaultMessage());
 				}
 				return new ResponseEntity<>(userUpdateResource, HttpStatus.UNPROCESSABLE_ENTITY);
+			case "rolesAddResource":
+				RolesAddResource rolesAddResource = new RolesAddResource();
+				for (FieldError error : ex.getBindingResult().getFieldErrors()) {
+					sField = rolesAddResource.getClass().getDeclaredField(error.getField());
+					sField.setAccessible(true);
+					sField.set(rolesAddResource.getClass().cast(rolesAddResource), error.getDefaultMessage());
+				}
+				return new ResponseEntity<>(rolesAddResource, HttpStatus.UNPROCESSABLE_ENTITY);
+			case "rolesUpdateResource":
+				RolesUpdateResource rolesUpdateResource = new RolesUpdateResource();
+				for (FieldError error : ex.getBindingResult().getFieldErrors()) {
+					sField = rolesUpdateResource.getClass().getDeclaredField(error.getField());
+					sField.setAccessible(true);
+					sField.set(rolesUpdateResource.getClass().cast(rolesUpdateResource), error.getDefaultMessage());
+				}
+				return new ResponseEntity<>(rolesUpdateResource, HttpStatus.UNPROCESSABLE_ENTITY);	
 
 			default:
 				return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
