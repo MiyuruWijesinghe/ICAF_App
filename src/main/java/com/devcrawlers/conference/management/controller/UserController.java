@@ -62,10 +62,10 @@ public class UserController {
 		}
 	}
 	
-	@PostMapping(value = "/save")
-	public ResponseEntity<Object> addUser(@Valid @RequestBody UserAddResource userAddResource) {
+	@PostMapping(value = "/register")
+	public ResponseEntity<Object> registerUser(@Valid @RequestBody UserAddResource userAddResource) {
 		Integer userId = userService.saveUser(userAddResource);
-		SuccessAndErrorDetailsResource successDetailsDto = new SuccessAndErrorDetailsResource(environment.getProperty("common.saved"), userId.toString());
+		SuccessAndErrorDetailsResource successDetailsDto = new SuccessAndErrorDetailsResource(environment.getProperty("user.registered"), userId.toString());
 		return new ResponseEntity<>(successDetailsDto, HttpStatus.CREATED);
 	}
 	
