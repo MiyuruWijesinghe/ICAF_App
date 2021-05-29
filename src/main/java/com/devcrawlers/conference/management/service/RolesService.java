@@ -7,6 +7,17 @@ import com.devcrawlers.conference.management.model.Roles;
 import com.devcrawlers.conference.management.resource.RolesAddResource;
 import com.devcrawlers.conference.management.resource.RolesUpdateResource;
 
+/**
+ * Roles Service
+ * 
+ ********************************************************************************************************
+ *  ###   Date         Author    IT No.        Description
+ *-------------------------------------------------------------------------------------------------------
+ *    1   01-05-2021   MiyuruW   IT19020990     Created
+ *    
+ ********************************************************************************************************
+ */
+
 @Service
 public interface RolesService {
 

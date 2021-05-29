@@ -25,6 +25,16 @@ import com.devcrawlers.conference.management.resource.RolesUpdateResource;
 import com.devcrawlers.conference.management.resource.SuccessAndErrorDetailsResource;
 import com.devcrawlers.conference.management.service.RolesService;
 
+/**
+ * Roles Controller
+ * 
+ ********************************************************************************************************
+ *  ###   Date         Author    IT No.        Description
+ *-------------------------------------------------------------------------------------------------------
+ *    1   01-05-2021   MiyuruW   IT19020990     Created
+ *    
+ ********************************************************************************************************
+ */
 
 @RestController
 @RequestMapping(value = "/roles")
@@ -38,6 +48,11 @@ public class RolesController {
 	private RolesService rolesService;
 
 	
+	/**
+	 * Gets the all roles.
+	 *
+	 * @return the all roles
+	 */
 	@GetMapping(value = "/all")
 	public ResponseEntity<Object> getAllRoles() {
 		SuccessAndErrorDetailsResource responseMessage = new SuccessAndErrorDetailsResource();
@@ -50,6 +65,13 @@ public class RolesController {
 		}
 	}
 	
+	
+	/**
+	 * Gets the role by id.
+	 *
+	 * @param id - the id
+	 * @return the role by id
+	 */
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Object> getRoleById(@PathVariable(value = "id", required = true) int id) {
 		SuccessAndErrorDetailsResource responseMessage = new SuccessAndErrorDetailsResource();
@@ -62,6 +84,13 @@ public class RolesController {
 		}
 	}
 	
+	
+	/**
+	 * Adds the role.
+	 *
+	 * @param rolesAddResource - the roles add resource
+	 * @return the response entity
+	 */
 	@PostMapping(value = "/save")
 	public ResponseEntity<Object> addRole(@Valid @RequestBody RolesAddResource rolesAddResource) {
 		Integer rolesId = rolesService.saveRole(rolesAddResource);
@@ -69,6 +98,14 @@ public class RolesController {
 		return new ResponseEntity<>(successDetailsDto, HttpStatus.CREATED);
 	}
 	
+	
+	/**
+	 * Update role.
+	 *
+	 * @param id - the id
+	 * @param rolesUpdateResource - the roles update resource
+	 * @return the response entity
+	 */
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<Object> updateRole(@PathVariable(value = "id", required = true) int id,
 			@Valid @RequestBody RolesUpdateResource rolesUpdateResource) {
@@ -77,6 +114,13 @@ public class RolesController {
 		return new ResponseEntity<>(successDetailsDto, HttpStatus.OK);
 	}
 	
+	
+	/**
+	 * Delete role.
+	 *
+	 * @param id - the id
+	 * @return the response entity
+	 */
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Object> deleteRole(@PathVariable(value = "id", required = true) int id) {
 		String message = rolesService.deleteRole(id);

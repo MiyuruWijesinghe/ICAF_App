@@ -26,6 +26,17 @@ import com.devcrawlers.conference.management.resource.UserAddResource;
 import com.devcrawlers.conference.management.resource.UserUpdateResource;
 import com.devcrawlers.conference.management.service.UserService;
 
+/**
+ * User Controller
+ * 
+ ********************************************************************************************************
+ *  ###   Date         Author    IT No.        Description
+ *-------------------------------------------------------------------------------------------------------
+ *    1   01-05-2021   MiyuruW   IT19020990     Created
+ *    
+ ********************************************************************************************************
+ */
+
 @RestController
 @RequestMapping(value = "/user")
 @CrossOrigin(origins = "*")
@@ -38,6 +49,11 @@ public class UserController {
 	private UserService userService;
 
 	
+	/**
+	 * Gets the all users.
+	 *
+	 * @return the all users
+	 */
 	@GetMapping(value = "/all")
 	public ResponseEntity<Object> getAllUsers() {
 		SuccessAndErrorDetailsResource responseMessage = new SuccessAndErrorDetailsResource();
@@ -50,6 +66,13 @@ public class UserController {
 		}
 	}
 	
+	
+	/**
+	 * Gets the user by id.
+	 *
+	 * @param id - the id
+	 * @return the user by id
+	 */
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Object> getUserById(@PathVariable(value = "id", required = true) int id) {
 		SuccessAndErrorDetailsResource responseMessage = new SuccessAndErrorDetailsResource();
@@ -62,6 +85,13 @@ public class UserController {
 		}
 	}
 	
+	
+	/**
+	 * Register user.
+	 *
+	 * @param userAddResource - the user add resource
+	 * @return the response entity
+	 */
 	@PostMapping(value = "/register")
 	public ResponseEntity<Object> registerUser(@Valid @RequestBody UserAddResource userAddResource) {
 		Integer userId = userService.saveUser(userAddResource);
@@ -69,6 +99,14 @@ public class UserController {
 		return new ResponseEntity<>(successDetailsDto, HttpStatus.CREATED);
 	}
 	
+	
+	/**
+	 * Update user.
+	 *
+	 * @param id - the id
+	 * @param userUpdateResource - the user update resource
+	 * @return the response entity
+	 */
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<Object> updateUser(@PathVariable(value = "id", required = true) int id,
 			@Valid @RequestBody UserUpdateResource userUpdateResource) {
@@ -77,6 +115,13 @@ public class UserController {
 		return new ResponseEntity<>(successDetailsDto, HttpStatus.OK);
 	}
 	
+	
+	/**
+	 * Delete user.
+	 *
+	 * @param id - the id
+	 * @return the response entity
+	 */
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Object> deleteUser(@PathVariable(value = "id", required = true) int id) {
 		String message = userService.deleteUser(id);

@@ -19,6 +19,16 @@ import com.devcrawlers.conference.management.resource.UserUpdateResource;
 import com.devcrawlers.conference.management.service.UserService;
 import com.devcrawlers.conference.management.util.IdGenerator;
 
+/**
+ * User Service Implementation
+ * 
+ ********************************************************************************************************
+ *  ###   Date         Author    IT No.        Description
+ *-------------------------------------------------------------------------------------------------------
+ *    1   01-05-2021   MiyuruW   IT19020990     Created
+ *    
+ ********************************************************************************************************
+ */
 
 @Component
 @Transactional(rollbackFor=Exception.class)
@@ -26,6 +36,15 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private Environment environment;
+	
+	//@Autowired
+	//AuthenticationManager authenticationManager;
+	
+	//@Autowired
+	//PasswordEncoder encoder;
+
+	//@Autowired
+	//JwtUtils jwtUtils;
 	
 	@Autowired
 	private UserRepository userRepository;
@@ -108,7 +127,9 @@ public class UserServiceImpl implements UserService {
 			user.setRoles(roles.get());
 		}
 		
-		user.setPassword(userUpdateResource.getPassword());
+		if(userUpdateResource.getPassword() != null && !userUpdateResource.getPassword().isEmpty()) {
+			user.setPassword(userUpdateResource.getPassword());
+		}
 		user.setAddressLine1(userUpdateResource.getAddressLine1());
 		user.setAddressLine2(userUpdateResource.getAddressLine2());
 		user.setAddressLine3(userUpdateResource.getAddressLine3());

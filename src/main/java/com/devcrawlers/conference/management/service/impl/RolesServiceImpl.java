@@ -16,6 +16,17 @@ import com.devcrawlers.conference.management.resource.RolesUpdateResource;
 import com.devcrawlers.conference.management.service.RolesService;
 import com.devcrawlers.conference.management.util.IdGenerator;
 
+/**
+ * Roles Service Implementation
+ * 
+ ********************************************************************************************************
+ *  ###   Date         Author    IT No.        Description
+ *-------------------------------------------------------------------------------------------------------
+ *    1   01-05-2021   MiyuruW   IT19020990     Created
+ *    
+ ********************************************************************************************************
+ */
+
 @Component
 @Transactional(rollbackFor=Exception.class)
 public class RolesServiceImpl implements RolesService {
