@@ -51,6 +51,15 @@ public class User {
 	
 	private String phoneNumber;
 	
+	@JsonIgnore
+	private Conference conferences;
+	
+	@Transient
+    private Integer conferenceId;
+	
+	@Transient
+    private String conferenceName;
+	
 	private String status;
 
 	public Integer getId() {
@@ -163,6 +172,30 @@ public class User {
 
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+	
+	public Conference getConferences() {
+		return conferences;
+	}
+
+	public void setConferences(Conference conferences) {
+		this.conferences = conferences;
+	}
+
+	public Integer getConferenceId() {
+		if(conferences != null) {
+			return conferences.getId();
+		} else {
+			return null;
+		}
+	}
+
+	public String getConferenceName() {
+		if(conferences != null) {
+			return conferences.getName();
+		} else {
+			return null;
+		}
 	}
 
 	public String getStatus() {

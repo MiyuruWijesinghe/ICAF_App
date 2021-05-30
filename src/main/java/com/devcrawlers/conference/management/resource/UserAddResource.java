@@ -49,6 +49,10 @@ public class UserAddResource {
 	@Pattern(regexp = "^$|[0-9]+", message = "{phoneNumber.pattern}")
 	@Size(max = 10, min = 10, message = "{phoneNumber.size}")
 	private String phoneNumber;
+	
+	@NotBlank(message = "{common.not-null}")
+	@Pattern(regexp = "^$|[0-9]+", message = "{common-numeric.pattern}")
+	private String conferenceId;
 
 	public String getRoleId() {
 		return roleId;
@@ -136,6 +140,14 @@ public class UserAddResource {
 
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+
+	public String getConferenceId() {
+		return conferenceId;
+	}
+
+	public void setConferenceId(String conferenceId) {
+		this.conferenceId = conferenceId;
 	}
 
 }

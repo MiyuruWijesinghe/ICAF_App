@@ -10,8 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.devcrawlers.conference.management.enums.CommonStatus;
 import com.devcrawlers.conference.management.exception.NoRecordFoundException;
 import com.devcrawlers.conference.management.exception.ValidateRecordException;
+import com.devcrawlers.conference.management.model.Conference;
 import com.devcrawlers.conference.management.model.Roles;
 import com.devcrawlers.conference.management.model.User;
+import com.devcrawlers.conference.management.repository.ConferenceRepository;
 import com.devcrawlers.conference.management.repository.RolesRepository;
 import com.devcrawlers.conference.management.repository.UserRepository;
 import com.devcrawlers.conference.management.resource.UserAddResource;
@@ -51,6 +53,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private RolesRepository rolesRepository;
+	
+	@Autowired
+	private ConferenceRepository conferenceRepository;
 	
 	@Override
 	public List<User> findAll() {
@@ -92,6 +97,13 @@ public class UserServiceImpl implements UserService {
 			throw new ValidateRecordException(environment.getProperty("role.invalid-value"), "message");
 		} else {
 			user.setRoles(roles.get());
+		}
+		
+		Optional<Conference> conference = conferenceRepository.findByIdAndStatus(Integer.parseInt(userAddResource.getConferenceId()), CommonStatus.ACTIVE.toString());
+		if (!conference.isPresent()) {
+			throw new ValidateRecordException(environment.getProperty("conference.invalid-value"), "message");
+		} else {
+			user.setConferences(conference.get());
 		}
 		
 		user.setId(generateId());

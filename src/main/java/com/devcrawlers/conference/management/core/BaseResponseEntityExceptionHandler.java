@@ -19,6 +19,8 @@ import com.devcrawlers.conference.management.exception.InvalidServiceIdException
 import com.devcrawlers.conference.management.exception.NoRecordFoundException;
 import com.devcrawlers.conference.management.exception.UserNotFoundException;
 import com.devcrawlers.conference.management.exception.ValidateRecordException;
+import com.devcrawlers.conference.management.resource.ConferenceAddResource;
+import com.devcrawlers.conference.management.resource.ConferenceUpdateResource;
 import com.devcrawlers.conference.management.resource.RolesAddResource;
 import com.devcrawlers.conference.management.resource.RolesUpdateResource;
 import com.devcrawlers.conference.management.resource.SuccessAndErrorDetailsResource;
@@ -115,7 +117,23 @@ public class BaseResponseEntityExceptionHandler extends ResponseEntityExceptionH
 					sField.setAccessible(true);
 					sField.set(rolesUpdateResource.getClass().cast(rolesUpdateResource), error.getDefaultMessage());
 				}
-				return new ResponseEntity<>(rolesUpdateResource, HttpStatus.UNPROCESSABLE_ENTITY);	
+				return new ResponseEntity<>(rolesUpdateResource, HttpStatus.UNPROCESSABLE_ENTITY);
+			case "conferenceAddResource":
+				ConferenceAddResource conferenceAddResource = new ConferenceAddResource();
+				for (FieldError error : ex.getBindingResult().getFieldErrors()) {
+					sField = conferenceAddResource.getClass().getDeclaredField(error.getField());
+					sField.setAccessible(true);
+					sField.set(conferenceAddResource.getClass().cast(conferenceAddResource), error.getDefaultMessage());
+				}
+				return new ResponseEntity<>(conferenceAddResource, HttpStatus.UNPROCESSABLE_ENTITY);
+			case "conferenceUpdateResource":
+				ConferenceUpdateResource conferenceUpdateResource = new ConferenceUpdateResource();
+				for (FieldError error : ex.getBindingResult().getFieldErrors()) {
+					sField = conferenceUpdateResource.getClass().getDeclaredField(error.getField());
+					sField.setAccessible(true);
+					sField.set(conferenceUpdateResource.getClass().cast(conferenceUpdateResource), error.getDefaultMessage());
+				}
+				return new ResponseEntity<>(conferenceUpdateResource, HttpStatus.UNPROCESSABLE_ENTITY);	
 
 			default:
 				return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
