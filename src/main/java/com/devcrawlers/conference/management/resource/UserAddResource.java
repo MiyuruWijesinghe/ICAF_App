@@ -19,12 +19,10 @@ public class UserAddResource {
 	
 	@NotBlank(message = "{common.not-null}")
 	@Size(max = 70, message = "{common-name.size}")
-	@Pattern(regexp = "^$|^[a-zA-Z]+", message = "{common-name.pattern}")
 	private String firstName;
 	
 	@NotBlank(message = "{common.not-null}")
 	@Size(max = 70, message = "{common-name.size}")
-	@Pattern(regexp = "^$|^[a-zA-Z]+", message = "{common-name.pattern}")
 	private String lastName;
 	
 	@NotBlank(message = "{common.not-null}")

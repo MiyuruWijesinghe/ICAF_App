@@ -2,14 +2,18 @@ package com.devcrawlers.conference.management.resource;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
-public class RolesAddResource {
+public class ConferenceTracksAddResource {
 
 	@NotBlank(message = "{common.not-null}")
-	@Pattern(regexp = "ADMIN|USER|EDITOR|REVIEWER|ATTENDEE", message = "{roles.pattern}")
+	@Size(max = 70, message = "{common-name.size}")
 	private String name;
+	
+	@NotBlank(message = "{common.not-null}")
+	private String imageURL;
 
 	public String getName() {
 		return name;
@@ -19,4 +23,12 @@ public class RolesAddResource {
 		this.name = name;
 	}
 
+	public String getImageURL() {
+		return imageURL;
+	}
+
+	public void setImageURL(String imageURL) {
+		this.imageURL = imageURL;
+	}
+	
 }

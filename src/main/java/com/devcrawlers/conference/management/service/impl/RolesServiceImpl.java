@@ -36,6 +36,17 @@ public class RolesServiceImpl implements RolesService {
 	
 	@Autowired
 	private RolesRepository rolesRepository;
+	
+	private int generateId() {
+		List<Roles> rolesList = rolesRepository.findAll();
+		List<Integer> rolesIdList = new ArrayList<>();
+		
+		for(Roles rolesObject : rolesList) {
+			rolesIdList.add(rolesObject.getId());
+		}
+		
+		return IdGenerator.generateIDs(rolesIdList);	
+	}
 
 	@Override
 	public List<Roles> findAll() {
@@ -50,17 +61,6 @@ public class RolesServiceImpl implements RolesService {
 		} else {
 			return Optional.empty();
 		}
-	}
-
-	private int generateId() {
-		List<Roles> rolesList = rolesRepository.findAll();
-		List<Integer> rolesIdList = new ArrayList<>();
-		
-		for(Roles rolesObject : rolesList) {
-			rolesIdList.add(rolesObject.getId());
-		}
-		
-		return IdGenerator.generateIDs(rolesIdList);	
 	}
 	
 	@Override
@@ -95,7 +95,7 @@ public class RolesServiceImpl implements RolesService {
 		}
 		
 		rolesRepository.deleteById(id);
-		return environment.getProperty("role.deleted");
+		return environment.getProperty("common.deleted");
 	}
 
 }

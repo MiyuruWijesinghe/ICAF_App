@@ -7,29 +7,19 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
-public class ConferenceAddResource {
+public class KeynoteSpeakersAddResource {
 
-	@NotBlank(message = "{common.not-null}")
-	@Size(max = 4, min = 4, message = "{common-year.size}")
-	@Pattern(regexp = "^$|[0-9]+", message = "{common-numeric.pattern}")
-	private String year;
-	
 	@NotBlank(message = "{common.not-null}")
 	@Size(max = 70, message = "{common-name.size}")
 	private String name;
 	
+	@NotBlank(message = "{common.not-null}")
+	private String designation;
+	
 	private String description;
 	
 	@NotBlank(message = "{common.not-null}")
-	private String venue;
-
-	public String getYear() {
-		return year;
-	}
-
-	public void setYear(String year) {
-		this.year = year;
-	}
+	private String imageURL;
 
 	public String getName() {
 		return name;
@@ -37,6 +27,14 @@ public class ConferenceAddResource {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getDesignation() {
+		return designation;
+	}
+
+	public void setDesignation(String designation) {
+		this.designation = designation;
 	}
 
 	public String getDescription() {
@@ -47,12 +45,12 @@ public class ConferenceAddResource {
 		this.description = description;
 	}
 
-	public String getVenue() {
-		return venue;
+	public String getImageURL() {
+		return imageURL;
 	}
 
-	public void setVenue(String venue) {
-		this.venue = venue;
+	public void setImageURL(String imageURL) {
+		this.imageURL = imageURL;
 	}
 	
 }

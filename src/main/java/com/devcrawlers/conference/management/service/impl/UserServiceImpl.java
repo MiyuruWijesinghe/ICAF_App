@@ -57,6 +57,17 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private ConferenceRepository conferenceRepository;
 	
+	private int generateId() {
+		List<User> userList = userRepository.findAll();
+		List<Integer> userIdList = new ArrayList<>();
+		
+		for(User userObject : userList) {
+			userIdList.add(userObject.getId());
+		}
+		
+		return IdGenerator.generateIDs(userIdList);	
+	}
+	
 	@Override
 	public List<User> findAll() {
 		return userRepository.findAll();
@@ -70,17 +81,6 @@ public class UserServiceImpl implements UserService {
 		} else {
 			return Optional.empty();
 		}
-	}
-
-	private int generateId() {
-		List<User> userList = userRepository.findAll();
-		List<Integer> userIdList = new ArrayList<>();
-		
-		for(User userObject : userList) {
-			userIdList.add(userObject.getId());
-		}
-		
-		return IdGenerator.generateIDs(userIdList);	
 	}
 	
 	@Override
@@ -160,7 +160,7 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		userRepository.deleteById(id);
-		return environment.getProperty("user.deleted");
+		return environment.getProperty("common.deleted");
 	}
 
 }

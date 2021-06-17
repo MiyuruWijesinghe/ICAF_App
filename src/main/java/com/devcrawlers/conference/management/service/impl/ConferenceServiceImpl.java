@@ -38,6 +38,17 @@ public class ConferenceServiceImpl implements ConferenceService {
 	@Autowired
 	private ConferenceRepository conferenceRepository;
 	
+	private int generateId() {
+		List<Conference> conferenceList = conferenceRepository.findAll();
+		List<Integer> conferenceIdList = new ArrayList<>();
+		
+		for(Conference conferenceObject : conferenceList) {
+			conferenceIdList.add(conferenceObject.getId());
+		}
+		
+		return IdGenerator.generateIDs(conferenceIdList);	
+	}
+	
 	@Override
 	public List<Conference> findAll() {
 		return conferenceRepository.findAll();
@@ -61,17 +72,6 @@ public class ConferenceServiceImpl implements ConferenceService {
 	@Override
 	public List<Conference> findByName(String name) {
 		return conferenceRepository.findByNameContaining(name);
-	}
-	
-	private int generateId() {
-		List<Conference> conferenceList = conferenceRepository.findAll();
-		List<Integer> conferenceIdList = new ArrayList<>();
-		
-		for(Conference conferenceObject : conferenceList) {
-			conferenceIdList.add(conferenceObject.getId());
-		}
-		
-		return IdGenerator.generateIDs(conferenceIdList);	
 	}
 
 	@Override
@@ -122,7 +122,7 @@ public class ConferenceServiceImpl implements ConferenceService {
 		}
 		
 		conferenceRepository.deleteById(id);
-		return environment.getProperty("conference.deleted");
+		return environment.getProperty("common.deleted");
 	}
 
 }
