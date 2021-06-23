@@ -73,6 +73,11 @@ public class ConferenceServiceImpl implements ConferenceService {
 	public List<Conference> findByName(String name) {
 		return conferenceRepository.findByNameContaining(name);
 	}
+	
+	@Override
+	public List<Conference> findByYear(String year) {
+		return conferenceRepository.findByYear(year);
+	}
 
 	@Override
 	public Integer saveConference(ConferenceAddResource conferenceAddResource) {

@@ -125,6 +125,25 @@ public class ConferenceController {
 	
 	
 	/**
+	 * Gets the conferences by year.
+	 *
+	 * @param year - the year
+	 * @return the conferences by year
+	 */
+	@GetMapping(value = "/year/{year}")
+	public ResponseEntity<Object> getConferencesByYear(@PathVariable(value = "year", required = true) String year) {
+		SuccessAndErrorDetailsResource responseMessage = new SuccessAndErrorDetailsResource();
+		List<Conference> conference = conferenceService.findByYear(year);
+		if (!conference.isEmpty()) {
+			return new ResponseEntity<>((Collection<Conference>) conference, HttpStatus.OK);
+		} else {
+			responseMessage.setMessages(environment.getProperty("common.record-not-found"));
+			return new ResponseEntity<>(responseMessage, HttpStatus.NO_CONTENT);
+		}
+	}
+	
+	
+	/**
 	 * Adds the conference.
 	 *
 	 * @param conferenceAddResource - the conference add resource

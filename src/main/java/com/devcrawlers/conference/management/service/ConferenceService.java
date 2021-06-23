@@ -29,6 +29,8 @@ public interface ConferenceService {
 	
 	public List<Conference> findByName(String name);
 	
+	public List<Conference> findByYear(String year);
+	
 	public Integer saveConference(ConferenceAddResource conferenceAddResource);
 	
 	public Conference updateConference(int id, ConferenceUpdateResource conferenceUpdateResource);

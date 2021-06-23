@@ -26,6 +26,8 @@ public interface ConferenceRepository extends MongoRepository<Conference, Intege
 	public List<Conference> findByStatus(String status);
 
 	public Optional<Conference> findByName(String name);
+	
+	public List<Conference> findByYear(String year);
 
 	public Optional<Conference> findByNameAndIdNotIn(String name, int id);
 

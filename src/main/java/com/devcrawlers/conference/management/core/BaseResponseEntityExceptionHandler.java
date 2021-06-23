@@ -20,6 +20,9 @@ import com.devcrawlers.conference.management.exception.NoRecordFoundException;
 import com.devcrawlers.conference.management.exception.UserNotFoundException;
 import com.devcrawlers.conference.management.exception.ValidateRecordException;
 import com.devcrawlers.conference.management.resource.ConferenceAddResource;
+import com.devcrawlers.conference.management.resource.ConferenceDetailsAddResource;
+import com.devcrawlers.conference.management.resource.ConferenceDetailsApproveRejectResource;
+import com.devcrawlers.conference.management.resource.ConferenceDetailsUpdateResource;
 import com.devcrawlers.conference.management.resource.ConferenceTracksAddResource;
 import com.devcrawlers.conference.management.resource.ConferenceTracksUpdateResource;
 import com.devcrawlers.conference.management.resource.ConferenceUpdateResource;
@@ -138,6 +141,30 @@ public class BaseResponseEntityExceptionHandler extends ResponseEntityExceptionH
 					sField.set(conferenceUpdateResource.getClass().cast(conferenceUpdateResource), error.getDefaultMessage());
 				}
 				return new ResponseEntity<>(conferenceUpdateResource, HttpStatus.UNPROCESSABLE_ENTITY);
+			case "conferenceDetailsAddResource":
+				ConferenceDetailsAddResource conferenceDetailsAddResource = new ConferenceDetailsAddResource();
+				for (FieldError error : ex.getBindingResult().getFieldErrors()) {
+					sField = conferenceDetailsAddResource.getClass().getDeclaredField(error.getField());
+					sField.setAccessible(true);
+					sField.set(conferenceDetailsAddResource.getClass().cast(conferenceDetailsAddResource), error.getDefaultMessage());
+				}
+				return new ResponseEntity<>(conferenceDetailsAddResource, HttpStatus.UNPROCESSABLE_ENTITY);
+			case "conferenceDetailsUpdateResource":
+				ConferenceDetailsUpdateResource conferenceDetailsUpdateResource = new ConferenceDetailsUpdateResource();
+				for (FieldError error : ex.getBindingResult().getFieldErrors()) {
+					sField = conferenceDetailsUpdateResource.getClass().getDeclaredField(error.getField());
+					sField.setAccessible(true);
+					sField.set(conferenceDetailsUpdateResource.getClass().cast(conferenceDetailsUpdateResource), error.getDefaultMessage());
+				}
+				return new ResponseEntity<>(conferenceDetailsUpdateResource, HttpStatus.UNPROCESSABLE_ENTITY);
+			case "conferenceDetailsApproveRejectResource":
+				ConferenceDetailsApproveRejectResource conferenceDetailsApproveRejectResource = new ConferenceDetailsApproveRejectResource();
+				for (FieldError error : ex.getBindingResult().getFieldErrors()) {
+					sField = conferenceDetailsApproveRejectResource.getClass().getDeclaredField(error.getField());
+					sField.setAccessible(true);
+					sField.set(conferenceDetailsApproveRejectResource.getClass().cast(conferenceDetailsApproveRejectResource), error.getDefaultMessage());
+				}
+				return new ResponseEntity<>(conferenceDetailsApproveRejectResource, HttpStatus.UNPROCESSABLE_ENTITY);	
 			case "conferenceTracksAddResource":
 				ConferenceTracksAddResource conferenceTracksAddResource = new ConferenceTracksAddResource();
 				for (FieldError error : ex.getBindingResult().getFieldErrors()) {

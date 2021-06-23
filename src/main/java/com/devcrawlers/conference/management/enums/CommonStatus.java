@@ -5,5 +5,6 @@ public enum CommonStatus {
 	INACTIVE,
 	CREATED,
 	APPROVED,
-	REJECTED
+	REJECTED, 
+	PENDING
 }
