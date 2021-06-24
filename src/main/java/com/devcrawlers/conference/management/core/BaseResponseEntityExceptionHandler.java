@@ -28,6 +28,8 @@ import com.devcrawlers.conference.management.resource.ConferenceTracksUpdateReso
 import com.devcrawlers.conference.management.resource.ConferenceUpdateResource;
 import com.devcrawlers.conference.management.resource.KeynoteSpeakersAddResource;
 import com.devcrawlers.conference.management.resource.KeynoteSpeakersUpdateResource;
+import com.devcrawlers.conference.management.resource.ResearchAddResource;
+import com.devcrawlers.conference.management.resource.ResearchUpdateResource;
 import com.devcrawlers.conference.management.resource.RolesAddResource;
 import com.devcrawlers.conference.management.resource.RolesUpdateResource;
 import com.devcrawlers.conference.management.resource.SuccessAndErrorDetailsResource;
@@ -214,7 +216,23 @@ public class BaseResponseEntityExceptionHandler extends ResponseEntityExceptionH
 					sField.setAccessible(true);
 					sField.set(workshopsUpdateResource.getClass().cast(workshopsUpdateResource), error.getDefaultMessage());
 				}
-				return new ResponseEntity<>(workshopsUpdateResource, HttpStatus.UNPROCESSABLE_ENTITY);	
+				return new ResponseEntity<>(workshopsUpdateResource, HttpStatus.UNPROCESSABLE_ENTITY);
+			case "researchAddResource":
+				ResearchAddResource researchAddResource = new ResearchAddResource();
+				for (FieldError error : ex.getBindingResult().getFieldErrors()) {
+					sField = researchAddResource.getClass().getDeclaredField(error.getField());
+					sField.setAccessible(true);
+					sField.set(researchAddResource.getClass().cast(researchAddResource), error.getDefaultMessage());
+				}
+				return new ResponseEntity<>(researchAddResource, HttpStatus.UNPROCESSABLE_ENTITY);
+			case "researchUpdateResource":
+				ResearchUpdateResource researchUpdateResource = new ResearchUpdateResource();
+				for (FieldError error : ex.getBindingResult().getFieldErrors()) {
+					sField = researchUpdateResource.getClass().getDeclaredField(error.getField());
+					sField.setAccessible(true);
+					sField.set(researchUpdateResource.getClass().cast(researchUpdateResource), error.getDefaultMessage());
+				}
+				return new ResponseEntity<>(researchUpdateResource, HttpStatus.UNPROCESSABLE_ENTITY);	
 
 			default:
 				return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);

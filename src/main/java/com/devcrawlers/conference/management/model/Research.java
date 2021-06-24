@@ -13,13 +13,13 @@ public class Research {
 	private Integer id;
 	
 	@JsonIgnore
-	private User users;
+	private ConferenceDetails conferenceDetail;
 	
 	@Transient
-    private Integer userId;
+    private Integer conferenceDetailsId;
 	
 	@Transient
-    private String userName;
+    private String topic;
 	
 	private String name;
 	
@@ -31,7 +31,20 @@ public class Research {
 	
 	private String status;
 	
+	private String remarks;
 
+	private String createdUser;
+	
+	private Date createdDate;
+	
+	private String approvedUser;
+	
+	private Date approvedDate;
+	
+	private String rejectedUser;
+	
+	private Date rejectedDate;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -40,12 +53,12 @@ public class Research {
 		this.id = id;
 	}
 
-	public User getUsers() {
-		return users;
+	public ConferenceDetails getConferenceDetail() {
+		return conferenceDetail;
 	}
 
-	public void setUsers(User users) {
-		this.users = users;
+	public void setConferenceDetail(ConferenceDetails conferenceDetail) {
+		this.conferenceDetail = conferenceDetail;
 	}
 
 	public String getName() {
@@ -87,18 +100,74 @@ public class Research {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	public String getRemarks() {
+		return remarks;
+	}
 
-	public Integer getUserId() {
-		if(users != null) {
-			return users.getId();
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+
+	public String getCreatedUser() {
+		return createdUser;
+	}
+
+	public void setCreatedUser(String createdUser) {
+		this.createdUser = createdUser;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public String getApprovedUser() {
+		return approvedUser;
+	}
+
+	public void setApprovedUser(String approvedUser) {
+		this.approvedUser = approvedUser;
+	}
+
+	public Date getApprovedDate() {
+		return approvedDate;
+	}
+
+	public void setApprovedDate(Date approvedDate) {
+		this.approvedDate = approvedDate;
+	}
+
+	public String getRejectedUser() {
+		return rejectedUser;
+	}
+
+	public void setRejectedUser(String rejectedUser) {
+		this.rejectedUser = rejectedUser;
+	}
+
+	public Date getRejectedDate() {
+		return rejectedDate;
+	}
+
+	public void setRejectedDate(Date rejectedDate) {
+		this.rejectedDate = rejectedDate;
+	}
+	
+	public Integer getConferenceDetailsId() {
+		if(conferenceDetail != null) {
+			return conferenceDetail.getId();
 		} else {
 			return null;
 		}
 	}
 
-	public String getUserName() {
-		if(users != null) {
-			return users.getFirstName() + " " + users.getLastName();
+	public String getTopic() {
+		if(conferenceDetail != null) {
+			return conferenceDetail.getTopic();
 		} else {
 			return null;
 		}
