@@ -9,6 +9,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import com.devcrawlers.conference.management.enums.CommonStatus;
+import com.devcrawlers.conference.management.enums.NotificationType;
 import com.devcrawlers.conference.management.exception.NoRecordFoundException;
 import com.devcrawlers.conference.management.exception.ValidateRecordException;
 import com.devcrawlers.conference.management.model.ConferenceDetails;
@@ -18,6 +19,7 @@ import com.devcrawlers.conference.management.repository.WorkshopsRepository;
 import com.devcrawlers.conference.management.resource.CommonApproveRejectResource;
 import com.devcrawlers.conference.management.resource.WorkshopsAddResource;
 import com.devcrawlers.conference.management.resource.WorkshopsUpdateResource;
+import com.devcrawlers.conference.management.service.NotificationsService;
 import com.devcrawlers.conference.management.service.WorkshopsService;
 import com.devcrawlers.conference.management.util.IdGenerator;
 
@@ -33,6 +35,9 @@ public class WorkshopsServiceImpl implements WorkshopsService {
 	
 	@Autowired
 	private ConferenceDetailsRepository conferenceDetailsRepository;
+	
+	@Autowired
+	private NotificationsService notificationsService;
 	
 	
 	private int generateId() {
@@ -170,6 +175,8 @@ public class WorkshopsServiceImpl implements WorkshopsService {
 		workshops.setRejectedUser(null);
 		workshops.setRejectedDate(null);
 		workshopsRepository.save(workshops);
+		
+		notificationsService.saveNotification(workshops.getCreatedUser(), NotificationType.WORKSHOPS.toString(), environment.getProperty("message-workshop.approved"), workshops.getRemarks(), CommonStatus.APPROVED.toString());
 		
 		return environment.getProperty("common.approved");
 	}

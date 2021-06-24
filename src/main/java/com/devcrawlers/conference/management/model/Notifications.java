@@ -1,10 +1,9 @@
 package com.devcrawlers.conference.management.model;
 
 import java.util.Date;
-import javax.persistence.Transient;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Document(collection = "Notifications")
 public class Notifications {
@@ -12,16 +11,13 @@ public class Notifications {
 	@Id
 	private Integer id;
 	
-	@JsonIgnore
-	private User users;
-	
-	@Transient
-    private Integer userId;
-	
-	@Transient
     private String userName;
 	
+	private String type;
+	
 	private String description;
+	
+	private String remarks;
 	
 	private Date createdDate;
 	
@@ -34,13 +30,21 @@ public class Notifications {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-	public User getUsers() {
-		return users;
+	
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUsers(User users) {
-		this.users = users;
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public String getDescription() {
@@ -49,6 +53,14 @@ public class Notifications {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
 	}
 
 	public Date getCreatedDate() {
@@ -66,20 +78,5 @@ public class Notifications {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-	public Integer getUserId() {
-		if(users != null) {
-			return users.getId();
-		} else {
-			return null;
-		}
-	}
 
-	public String getUserName() {
-		if(users != null) {
-			return users.getFirstName() + " " + users.getLastName();
-		} else {
-			return null;
-		}
-	}
 }
