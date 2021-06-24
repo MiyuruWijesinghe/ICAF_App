@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.devcrawlers.conference.management.model.ConferenceDetails;
 import com.devcrawlers.conference.management.resource.ConferenceDetailsAddResource;
-import com.devcrawlers.conference.management.resource.ConferenceDetailsApproveRejectResource;
+import com.devcrawlers.conference.management.resource.CommonApproveRejectResource;
 import com.devcrawlers.conference.management.resource.ConferenceDetailsUpdateResource;
 import com.devcrawlers.conference.management.resource.SuccessAndErrorDetailsResource;
 import com.devcrawlers.conference.management.service.ConferenceDetailsService;
@@ -219,13 +219,13 @@ public class ConferenceDetailsController {
 	 * Approve conference details.
 	 *
 	 * @param id - the id
-	 * @param conferenceDetailsApproveRejectResource - the conference details approve reject resource
+	 * @param commonApproveRejectResource - the common approve reject resource
 	 * @return the response entity
 	 */
 	@PutMapping(value = "/approve/{id}")
 	public ResponseEntity<Object> approveConferenceDetails(@PathVariable(value = "id", required = true) int id,
-			@Valid @RequestBody ConferenceDetailsApproveRejectResource conferenceDetailsApproveRejectResource) {
-		String message = conferenceDetailsService.approveConferenceDetails(id, conferenceDetailsApproveRejectResource);
+			@Valid @RequestBody CommonApproveRejectResource commonApproveRejectResource) {
+		String message = conferenceDetailsService.approveConferenceDetails(id, commonApproveRejectResource);
 		SuccessAndErrorDetailsResource successDetailsDto = new SuccessAndErrorDetailsResource(message);
 		return new ResponseEntity<>(successDetailsDto, HttpStatus.OK);
 	}
@@ -235,13 +235,13 @@ public class ConferenceDetailsController {
 	 * Reject conference details.
 	 *
 	 * @param id - the id
-	 * @param conferenceDetailsApproveRejectResource - the conference details approve reject resource
+	 * @param commonApproveRejectResource - the common approve reject resource
 	 * @return the response entity
 	 */
 	@PutMapping(value = "/reject/{id}")
 	public ResponseEntity<Object> rejectConferenceDetails(@PathVariable(value = "id", required = true) int id,
-			@Valid @RequestBody ConferenceDetailsApproveRejectResource conferenceDetailsApproveRejectResource) {
-		String message = conferenceDetailsService.rejectConferenceDetails(id, conferenceDetailsApproveRejectResource);
+			@Valid @RequestBody CommonApproveRejectResource commonApproveRejectResource) {
+		String message = conferenceDetailsService.rejectConferenceDetails(id, commonApproveRejectResource);
 		SuccessAndErrorDetailsResource successDetailsDto = new SuccessAndErrorDetailsResource(message);
 		return new ResponseEntity<>(successDetailsDto, HttpStatus.OK);
 	}

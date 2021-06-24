@@ -25,4 +25,6 @@ public interface ConferenceDetailsRepository extends MongoRepository<ConferenceD
 
 	public Optional<ConferenceDetails> findByTopicAndIdNotIn(String topic, int id);
 
+	public Optional<ConferenceDetails> findByIdAndStatus(int id, String status);
+
 }

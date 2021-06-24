@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.devcrawlers.conference.management.model.ConferenceDetails;
 import com.devcrawlers.conference.management.resource.ConferenceDetailsAddResource;
-import com.devcrawlers.conference.management.resource.ConferenceDetailsApproveRejectResource;
+import com.devcrawlers.conference.management.resource.CommonApproveRejectResource;
 import com.devcrawlers.conference.management.resource.ConferenceDetailsUpdateResource;
 
 @Service
@@ -33,7 +33,7 @@ public interface ConferenceDetailsService {
 	
 	public String deleteConferenceDetails(int id);
 	
-	public String approveConferenceDetails(int id, ConferenceDetailsApproveRejectResource conferenceDetailsApproveRejectResource);
+	public String approveConferenceDetails(int id, CommonApproveRejectResource commonApproveRejectResource);
 
-	public String rejectConferenceDetails(int id, ConferenceDetailsApproveRejectResource conferenceDetailsApproveRejectResource);
+	public String rejectConferenceDetails(int id, CommonApproveRejectResource commonApproveRejectResource);
 }

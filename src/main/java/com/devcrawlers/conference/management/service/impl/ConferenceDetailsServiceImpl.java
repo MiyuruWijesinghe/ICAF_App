@@ -19,7 +19,7 @@ import com.devcrawlers.conference.management.model.ConferenceDetails;
 import com.devcrawlers.conference.management.repository.ConferenceDetailsRepository;
 import com.devcrawlers.conference.management.repository.ConferenceRepository;
 import com.devcrawlers.conference.management.resource.ConferenceDetailsAddResource;
-import com.devcrawlers.conference.management.resource.ConferenceDetailsApproveRejectResource;
+import com.devcrawlers.conference.management.resource.CommonApproveRejectResource;
 import com.devcrawlers.conference.management.resource.ConferenceDetailsUpdateResource;
 import com.devcrawlers.conference.management.service.ConferenceDetailsService;
 import com.devcrawlers.conference.management.util.IdGenerator;
@@ -177,7 +177,7 @@ public class ConferenceDetailsServiceImpl implements ConferenceDetailsService {
 	}
 
 	@Override
-	public String approveConferenceDetails(int id, ConferenceDetailsApproveRejectResource conferenceDetailsApproveRejectResource) {
+	public String approveConferenceDetails(int id, CommonApproveRejectResource commonApproveRejectResource) {
 		
 		Optional<ConferenceDetails> isPresentConferenceDetails = conferenceDetailsRepository.findById(id);
 		if (!isPresentConferenceDetails.isPresent()) {
@@ -186,8 +186,8 @@ public class ConferenceDetailsServiceImpl implements ConferenceDetailsService {
 		
 		ConferenceDetails conferenceDetails = isPresentConferenceDetails.get();
 		conferenceDetails.setStatus(CommonStatus.APPROVED.toString());
-		conferenceDetails.setRemarks(conferenceDetailsApproveRejectResource.getRemarks());
-		conferenceDetails.setApprovedUser(conferenceDetailsApproveRejectResource.getUserName());
+		conferenceDetails.setRemarks(commonApproveRejectResource.getRemarks());
+		conferenceDetails.setApprovedUser(commonApproveRejectResource.getUserName());
 		conferenceDetails.setApprovedDate(new Date());
 		conferenceDetails.setRejectedUser(null);
 		conferenceDetails.setRejectedDate(null);
@@ -197,7 +197,7 @@ public class ConferenceDetailsServiceImpl implements ConferenceDetailsService {
 	}
 
 	@Override
-	public String rejectConferenceDetails(int id, ConferenceDetailsApproveRejectResource conferenceDetailsApproveRejectResource) {
+	public String rejectConferenceDetails(int id, CommonApproveRejectResource commonApproveRejectResource) {
 		
 		Optional<ConferenceDetails> isPresentConferenceDetails = conferenceDetailsRepository.findById(id);
 		if (!isPresentConferenceDetails.isPresent()) {
@@ -206,8 +206,8 @@ public class ConferenceDetailsServiceImpl implements ConferenceDetailsService {
 		
 		ConferenceDetails conferenceDetails = isPresentConferenceDetails.get();
 		conferenceDetails.setStatus(CommonStatus.REJECTED.toString());
-		conferenceDetails.setRemarks(conferenceDetailsApproveRejectResource.getRemarks());
-		conferenceDetails.setRejectedUser(conferenceDetailsApproveRejectResource.getUserName());
+		conferenceDetails.setRemarks(commonApproveRejectResource.getRemarks());
+		conferenceDetails.setRejectedUser(commonApproveRejectResource.getUserName());
 		conferenceDetails.setRejectedDate(new Date());
 		conferenceDetails.setApprovedUser(null);
 		conferenceDetails.setApprovedDate(null);

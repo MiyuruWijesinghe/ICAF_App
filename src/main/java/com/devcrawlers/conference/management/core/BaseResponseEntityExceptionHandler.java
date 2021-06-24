@@ -21,7 +21,7 @@ import com.devcrawlers.conference.management.exception.UserNotFoundException;
 import com.devcrawlers.conference.management.exception.ValidateRecordException;
 import com.devcrawlers.conference.management.resource.ConferenceAddResource;
 import com.devcrawlers.conference.management.resource.ConferenceDetailsAddResource;
-import com.devcrawlers.conference.management.resource.ConferenceDetailsApproveRejectResource;
+import com.devcrawlers.conference.management.resource.CommonApproveRejectResource;
 import com.devcrawlers.conference.management.resource.ConferenceDetailsUpdateResource;
 import com.devcrawlers.conference.management.resource.ConferenceTracksAddResource;
 import com.devcrawlers.conference.management.resource.ConferenceTracksUpdateResource;
@@ -34,6 +34,8 @@ import com.devcrawlers.conference.management.resource.SuccessAndErrorDetailsReso
 import com.devcrawlers.conference.management.resource.UserAddResource;
 import com.devcrawlers.conference.management.resource.UserUpdateResource;
 import com.devcrawlers.conference.management.resource.ValidateResource;
+import com.devcrawlers.conference.management.resource.WorkshopsAddResource;
+import com.devcrawlers.conference.management.resource.WorkshopsUpdateResource;
 
 
 @RestControllerAdvice
@@ -157,14 +159,14 @@ public class BaseResponseEntityExceptionHandler extends ResponseEntityExceptionH
 					sField.set(conferenceDetailsUpdateResource.getClass().cast(conferenceDetailsUpdateResource), error.getDefaultMessage());
 				}
 				return new ResponseEntity<>(conferenceDetailsUpdateResource, HttpStatus.UNPROCESSABLE_ENTITY);
-			case "conferenceDetailsApproveRejectResource":
-				ConferenceDetailsApproveRejectResource conferenceDetailsApproveRejectResource = new ConferenceDetailsApproveRejectResource();
+			case "commonApproveRejectResource":
+				CommonApproveRejectResource commonApproveRejectResource = new CommonApproveRejectResource();
 				for (FieldError error : ex.getBindingResult().getFieldErrors()) {
-					sField = conferenceDetailsApproveRejectResource.getClass().getDeclaredField(error.getField());
+					sField = commonApproveRejectResource.getClass().getDeclaredField(error.getField());
 					sField.setAccessible(true);
-					sField.set(conferenceDetailsApproveRejectResource.getClass().cast(conferenceDetailsApproveRejectResource), error.getDefaultMessage());
+					sField.set(commonApproveRejectResource.getClass().cast(commonApproveRejectResource), error.getDefaultMessage());
 				}
-				return new ResponseEntity<>(conferenceDetailsApproveRejectResource, HttpStatus.UNPROCESSABLE_ENTITY);	
+				return new ResponseEntity<>(commonApproveRejectResource, HttpStatus.UNPROCESSABLE_ENTITY);	
 			case "conferenceTracksAddResource":
 				ConferenceTracksAddResource conferenceTracksAddResource = new ConferenceTracksAddResource();
 				for (FieldError error : ex.getBindingResult().getFieldErrors()) {
@@ -196,7 +198,23 @@ public class BaseResponseEntityExceptionHandler extends ResponseEntityExceptionH
 					sField.setAccessible(true);
 					sField.set(keynoteSpeakersUpdateResource.getClass().cast(keynoteSpeakersUpdateResource), error.getDefaultMessage());
 				}
-				return new ResponseEntity<>(keynoteSpeakersUpdateResource, HttpStatus.UNPROCESSABLE_ENTITY);	
+				return new ResponseEntity<>(keynoteSpeakersUpdateResource, HttpStatus.UNPROCESSABLE_ENTITY);
+			case "workshopsAddResource":
+				WorkshopsAddResource workshopsAddResource = new WorkshopsAddResource();
+				for (FieldError error : ex.getBindingResult().getFieldErrors()) {
+					sField = workshopsAddResource.getClass().getDeclaredField(error.getField());
+					sField.setAccessible(true);
+					sField.set(workshopsAddResource.getClass().cast(workshopsAddResource), error.getDefaultMessage());
+				}
+				return new ResponseEntity<>(workshopsAddResource, HttpStatus.UNPROCESSABLE_ENTITY);
+			case "workshopsUpdateResource":
+				WorkshopsUpdateResource workshopsUpdateResource = new WorkshopsUpdateResource();
+				for (FieldError error : ex.getBindingResult().getFieldErrors()) {
+					sField = workshopsUpdateResource.getClass().getDeclaredField(error.getField());
+					sField.setAccessible(true);
+					sField.set(workshopsUpdateResource.getClass().cast(workshopsUpdateResource), error.getDefaultMessage());
+				}
+				return new ResponseEntity<>(workshopsUpdateResource, HttpStatus.UNPROCESSABLE_ENTITY);	
 
 			default:
 				return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
