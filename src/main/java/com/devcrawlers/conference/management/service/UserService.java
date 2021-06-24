@@ -27,6 +27,8 @@ public interface UserService {
 	
 	public Optional<User> findById(int id);
 	
+	public Optional<User> findByUserName(String userName);
+	
 	public Integer saveUser(UserAddResource userAddResource);
 	
 	public User updateUser(int id, UserUpdateResource userUpdateResource);

@@ -87,6 +87,25 @@ public class UserController {
 	
 	
 	/**
+	 * Gets the user by user name.
+	 *
+	 * @param userName - the user name
+	 * @return the user by user name
+	 */
+	@GetMapping(value = "/username/{userName}")
+	public ResponseEntity<Object> getUserByUserName(@PathVariable(value = "userName", required = true) String userName) {
+		SuccessAndErrorDetailsResource responseMessage = new SuccessAndErrorDetailsResource();
+		Optional<User> isPresentUser = userService.findByUserName(userName);
+		if (isPresentUser.isPresent()) {
+			return new ResponseEntity<>(isPresentUser, HttpStatus.OK);
+		} else {
+			responseMessage.setMessages(environment.getProperty("common.record-not-found"));
+			return new ResponseEntity<>(responseMessage, HttpStatus.NO_CONTENT);
+		}
+	}
+	
+	
+	/**
 	 * Register user.
 	 *
 	 * @param userAddResource - the user add resource

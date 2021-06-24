@@ -84,6 +84,16 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
+	public Optional<User> findByUserName(String userName) {
+		Optional<User> user = userRepository.findByUserName(userName);
+		if (user.isPresent()) {
+			return Optional.ofNullable(user.get());
+		} else {
+			return Optional.empty();
+		}
+	}
+	
+	@Override
 	public Integer saveUser(UserAddResource userAddResource) {
 		User user = new User();
 		
