@@ -20,6 +20,8 @@ public interface ConferenceDetailsRepository extends MongoRepository<ConferenceD
 	public List<ConferenceDetails> findByConferencesYear(String conferenceYear);
 
 	public Optional<ConferenceDetails> findByTopic(String topic);
+	
+	public List<ConferenceDetails> findByCreatedUser(String createdUser);
 
 	public Optional<ConferenceDetails> findByTopicAndIdNotIn(String topic, int id);
 

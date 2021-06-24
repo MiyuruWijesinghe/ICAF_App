@@ -153,6 +153,25 @@ public class ConferenceDetailsController {
 	
 	
 	/**
+	 * Gets the conference details by created user.
+	 *
+	 * @param createdUser - the created user
+	 * @return the conference details by created user
+	 */
+	@GetMapping(value = "/created-user/{createdUser}")
+	public ResponseEntity<Object> getConferenceDetailsByCreatedUser(@PathVariable(value = "createdUser", required = true) String createdUser) {
+		SuccessAndErrorDetailsResource responseMessage = new SuccessAndErrorDetailsResource();
+		List<ConferenceDetails> conferenceDetails = conferenceDetailsService.findByCreatedUser(createdUser);
+		if (!conferenceDetails.isEmpty()) {
+			return new ResponseEntity<>((Collection<ConferenceDetails>) conferenceDetails, HttpStatus.OK);
+		} else {
+			responseMessage.setMessages(environment.getProperty("common.record-not-found"));
+			return new ResponseEntity<>(responseMessage, HttpStatus.NO_CONTENT);
+		}
+	}
+	
+	
+	/**
 	 * Adds the conference details.
 	 *
 	 * @param conferenceDetailsAddResource - the conference details add resource

@@ -25,6 +25,8 @@ public interface ConferenceDetailsService {
 	
 	public List<ConferenceDetails> findByConferenceYear(String conferenceYear);
 	
+	public List<ConferenceDetails> findByCreatedUser(String createdUser);
+	
 	public Integer saveConferenceDetails(ConferenceDetailsAddResource conferenceDetailsAddResource);
 	
 	public ConferenceDetails updateConferenceDetails(int id, ConferenceDetailsUpdateResource conferenceDetailsUpdateResource);

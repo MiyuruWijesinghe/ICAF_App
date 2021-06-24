@@ -92,6 +92,11 @@ public class ConferenceDetailsServiceImpl implements ConferenceDetailsService {
 	public List<ConferenceDetails> findByConferenceYear(String conferenceYear) {
 		return conferenceDetailsRepository.findByConferencesYear(conferenceYear);
 	}
+	
+	@Override
+	public List<ConferenceDetails> findByCreatedUser(String createdUser) {
+		return conferenceDetailsRepository.findByCreatedUser(createdUser);
+	}
 
 	@Override
 	public Integer saveConferenceDetails(ConferenceDetailsAddResource conferenceDetailsAddResource) {
