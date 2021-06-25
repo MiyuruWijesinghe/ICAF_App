@@ -11,6 +11,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import com.devcrawlers.conference.management.enums.CommonStatus;
+import com.devcrawlers.conference.management.enums.NotificationType;
 import com.devcrawlers.conference.management.exception.NoRecordFoundException;
 import com.devcrawlers.conference.management.exception.ValidateRecordException;
 import com.devcrawlers.conference.management.model.ConferenceDetails;
@@ -20,6 +21,7 @@ import com.devcrawlers.conference.management.repository.ResearchRepository;
 import com.devcrawlers.conference.management.resource.CommonApproveRejectResource;
 import com.devcrawlers.conference.management.resource.ResearchAddResource;
 import com.devcrawlers.conference.management.resource.ResearchUpdateResource;
+import com.devcrawlers.conference.management.service.NotificationsService;
 import com.devcrawlers.conference.management.service.ResearchService;
 import com.devcrawlers.conference.management.util.IdGenerator;
 
@@ -35,6 +37,9 @@ public class ResearchServiceImpl implements ResearchService {
 	
 	@Autowired
 	private ConferenceDetailsRepository conferenceDetailsRepository;
+	
+	@Autowired
+	private NotificationsService notificationsService;
 	
 	private Date formatDate(String date) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -183,6 +188,8 @@ public class ResearchServiceImpl implements ResearchService {
 		research.setRejectedDate(null);
 		researchRepository.save(research);
 		
+		notificationsService.saveNotification(research.getCreatedUser(), NotificationType.RESEARCH.toString(), environment.getProperty("message-research.approved"), research.getRemarks(), CommonStatus.APPROVED.toString());
+		
 		return environment.getProperty("common.approved");
 	}
 
@@ -202,6 +209,8 @@ public class ResearchServiceImpl implements ResearchService {
 		research.setApprovedUser(null);
 		research.setApprovedDate(null);
 		researchRepository.save(research);
+		
+		notificationsService.saveNotification(research.getCreatedUser(), NotificationType.RESEARCH.toString(), environment.getProperty("message-research.rejected"), research.getRemarks(), CommonStatus.REJECTED.toString());
 		
 		return environment.getProperty("common.rejected");
 	}

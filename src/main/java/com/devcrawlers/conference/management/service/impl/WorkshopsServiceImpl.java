@@ -198,6 +198,8 @@ public class WorkshopsServiceImpl implements WorkshopsService {
 		workshops.setApprovedDate(null);
 		workshopsRepository.save(workshops);
 		
+		notificationsService.saveNotification(workshops.getCreatedUser(), NotificationType.WORKSHOPS.toString(), environment.getProperty("message-workshop.rejected"), workshops.getRemarks(), CommonStatus.REJECTED.toString());
+		
 		return environment.getProperty("common.rejected");
 	}
 
