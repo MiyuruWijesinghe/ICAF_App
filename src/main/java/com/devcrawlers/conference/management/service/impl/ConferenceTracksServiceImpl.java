@@ -1,6 +1,7 @@
 package com.devcrawlers.conference.management.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,13 +11,16 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.devcrawlers.conference.management.enums.CommonStatus;
+import com.devcrawlers.conference.management.enums.NotificationType;
 import com.devcrawlers.conference.management.exception.NoRecordFoundException;
 import com.devcrawlers.conference.management.exception.ValidateRecordException;
 import com.devcrawlers.conference.management.model.ConferenceTracks;
 import com.devcrawlers.conference.management.repository.ConferenceTracksRepository;
+import com.devcrawlers.conference.management.resource.CommonApproveRejectResource;
 import com.devcrawlers.conference.management.resource.ConferenceTracksAddResource;
 import com.devcrawlers.conference.management.resource.ConferenceTracksUpdateResource;
 import com.devcrawlers.conference.management.service.ConferenceTracksService;
+import com.devcrawlers.conference.management.service.NotificationsService;
 import com.devcrawlers.conference.management.util.IdGenerator;
 
 @Component
@@ -28,6 +32,9 @@ public class ConferenceTracksServiceImpl implements ConferenceTracksService {
 	
 	@Autowired
 	private ConferenceTracksRepository conferenceTracksRepository;
+	
+	@Autowired
+	private NotificationsService notificationsService;
 	
 	private int generateId() {
 		List<ConferenceTracks> conferenceTracksList = conferenceTracksRepository.findAll();
@@ -77,7 +84,9 @@ public class ConferenceTracksServiceImpl implements ConferenceTracksService {
         conferenceTrack.setId(generateId());
         conferenceTrack.setName(conferenceTracksAddResource.getName());
         conferenceTrack.setImageURL(conferenceTracksAddResource.getImageURL());
-		conferenceTrack.setStatus(CommonStatus.ACTIVE.toString());
+		conferenceTrack.setStatus(CommonStatus.PENDING.toString());
+		conferenceTrack.setCreatedUser("MKW");
+		conferenceTrack.setCreatedDate(new Date());
 		conferenceTracksRepository.save(conferenceTrack);
 		return conferenceTrack.getId();
 	}
@@ -96,7 +105,14 @@ public class ConferenceTracksServiceImpl implements ConferenceTracksService {
 		ConferenceTracks conferenceTrack = isPresentConferenceTrack.get();
 		conferenceTrack.setName(conferenceTracksUpdateResource.getName());
 		conferenceTrack.setImageURL(conferenceTracksUpdateResource.getImageURL());
-		conferenceTrack.setStatus(conferenceTracksUpdateResource.getStatus());
+		conferenceTrack.setStatus(CommonStatus.PENDING.toString());
+		conferenceTrack.setCreatedUser("MKW");
+		conferenceTrack.setCreatedDate(new Date());
+		conferenceTrack.setRemarks(null);
+		conferenceTrack.setApprovedUser(null);
+		conferenceTrack.setApprovedDate(null);
+		conferenceTrack.setRejectedUser(null);
+		conferenceTrack.setRejectedDate(null);
 		conferenceTracksRepository.save(conferenceTrack);
 		return conferenceTrack;
 	}
@@ -110,6 +126,50 @@ public class ConferenceTracksServiceImpl implements ConferenceTracksService {
 		
 		conferenceTracksRepository.deleteById(id);
 		return environment.getProperty("common.deleted");
+	}
+
+	@Override
+	public String approveConferenceTrack(int id, CommonApproveRejectResource commonApproveRejectResource) {
+		
+		Optional<ConferenceTracks> isPresentConferenceTrack = conferenceTracksRepository.findById(id);
+		if (!isPresentConferenceTrack.isPresent()) {
+			throw new NoRecordFoundException(environment.getProperty("common.record-not-found"));
+		}
+		
+		ConferenceTracks conferenceTrack = isPresentConferenceTrack.get();
+		conferenceTrack.setStatus(CommonStatus.APPROVED.toString());
+		conferenceTrack.setRemarks(commonApproveRejectResource.getRemarks());
+		conferenceTrack.setApprovedUser(commonApproveRejectResource.getUserName());
+		conferenceTrack.setApprovedDate(new Date());
+		conferenceTrack.setRejectedUser(null);
+		conferenceTrack.setRejectedDate(null);
+		conferenceTracksRepository.save(conferenceTrack);
+		
+		notificationsService.saveNotification(conferenceTrack.getCreatedUser(), NotificationType.TRACKS.toString(), environment.getProperty("message-tracks.approved"), conferenceTrack.getRemarks(), CommonStatus.APPROVED.toString());
+		
+		return environment.getProperty("common.approved");
+	}
+
+	@Override
+	public String rejectConferenceTrack(int id, CommonApproveRejectResource commonApproveRejectResource) {
+		
+		Optional<ConferenceTracks> isPresentConferenceTrack = conferenceTracksRepository.findById(id);
+		if (!isPresentConferenceTrack.isPresent()) {
+			throw new NoRecordFoundException(environment.getProperty("common.record-not-found"));
+		}
+		
+		ConferenceTracks conferenceTrack = isPresentConferenceTrack.get();
+		conferenceTrack.setStatus(CommonStatus.REJECTED.toString());
+		conferenceTrack.setRemarks(commonApproveRejectResource.getRemarks());
+		conferenceTrack.setRejectedUser(commonApproveRejectResource.getUserName());
+		conferenceTrack.setRejectedDate(new Date());
+		conferenceTrack.setApprovedUser(null);
+		conferenceTrack.setApprovedDate(null);
+		conferenceTracksRepository.save(conferenceTrack);
+		
+		notificationsService.saveNotification(conferenceTrack.getCreatedUser(), NotificationType.TRACKS.toString(), environment.getProperty("message-tracks.rejected"), conferenceTrack.getRemarks(), CommonStatus.REJECTED.toString());
+		
+		return environment.getProperty("common.rejected");
 	}
 	
 }
