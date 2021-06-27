@@ -2,6 +2,7 @@ package com.devcrawlers.conference.management.controller;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -28,6 +29,25 @@ public class NotificationsController {
 	
 	@Autowired
 	private NotificationsService notificationsService;
+	
+	
+	/**
+	 * Gets the notification by id.
+	 *
+	 * @param id - the id
+	 * @return the notification by id
+	 */
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<Object> getNotificationById(@PathVariable(value = "id", required = true) int id) {
+		SuccessAndErrorDetailsResource responseMessage = new SuccessAndErrorDetailsResource();
+		Optional<Notifications> isPresentNotification = notificationsService.findById(id);
+		if (isPresentNotification.isPresent()) {
+			return new ResponseEntity<>(isPresentNotification, HttpStatus.OK);
+		} else {
+			responseMessage.setMessages(environment.getProperty("common.record-not-found"));
+			return new ResponseEntity<>(responseMessage, HttpStatus.NO_CONTENT);
+		}
+	}
 	
 	
 	/**

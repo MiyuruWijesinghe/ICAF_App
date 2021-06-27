@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.devcrawlers.conference.management.exception.NoRecordFoundException;
 import com.devcrawlers.conference.management.model.Notifications;
 import com.devcrawlers.conference.management.repository.NotificationsRepository;
@@ -35,6 +37,16 @@ public class NotificationsServiceImpl implements NotificationsService {
 		return IdGenerator.generateIDs(notificationsIdList);	
 	}
 
+	@Override
+	public Optional<Notifications> findById(int id) {
+		Optional<Notifications> notifications = notificationsRepository.findById(id);
+		if (notifications.isPresent()) {
+			return Optional.ofNullable(notifications.get());
+		} else {
+			return Optional.empty();
+		}
+	}
+	
 	@Override
 	public List<Notifications> findByUserName(String userName) {
 		return notificationsRepository.findByUserName(userName);
