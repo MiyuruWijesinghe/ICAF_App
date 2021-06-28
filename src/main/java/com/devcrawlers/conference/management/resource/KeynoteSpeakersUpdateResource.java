@@ -1,8 +1,8 @@
 package com.devcrawlers.conference.management.resource;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
@@ -19,10 +19,6 @@ public class KeynoteSpeakersUpdateResource {
 	
 	@NotBlank(message = "{common.not-null}")
 	private String imageURL;
-	
-	@NotBlank(message = "{common.not-null}")
-	@Pattern(regexp = "ACTIVE|INACTIVE", message = "{common-status.pattern}")
-	private String status;
 
 	public String getName() {
 		return name;
@@ -54,14 +50,6 @@ public class KeynoteSpeakersUpdateResource {
 
 	public void setImageURL(String imageURL) {
 		this.imageURL = imageURL;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
 	}
 	
 }
