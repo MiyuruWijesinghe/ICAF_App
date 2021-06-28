@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.devcrawlers.conference.management.enums.CommonStatus;
-import com.devcrawlers.conference.management.enums.NotificationType;
 import com.devcrawlers.conference.management.exception.NoRecordFoundException;
 import com.devcrawlers.conference.management.exception.ValidateRecordException;
 import com.devcrawlers.conference.management.model.ConferenceTracks;
@@ -145,7 +144,7 @@ public class ConferenceTracksServiceImpl implements ConferenceTracksService {
 		conferenceTrack.setRejectedDate(null);
 		conferenceTracksRepository.save(conferenceTrack);
 		
-		notificationsService.saveNotification(conferenceTrack.getCreatedUser(), NotificationType.TRACKS.toString(), environment.getProperty("message-tracks.approved"), conferenceTrack.getRemarks(), CommonStatus.APPROVED.toString());
+		notificationsService.saveNotification(conferenceTrack.getCreatedUser(), "Tracks", environment.getProperty("message-tracks.approved"), conferenceTrack.getRemarks(), CommonStatus.APPROVED.toString());
 		
 		return environment.getProperty("common.approved");
 	}
@@ -167,7 +166,7 @@ public class ConferenceTracksServiceImpl implements ConferenceTracksService {
 		conferenceTrack.setApprovedDate(null);
 		conferenceTracksRepository.save(conferenceTrack);
 		
-		notificationsService.saveNotification(conferenceTrack.getCreatedUser(), NotificationType.TRACKS.toString(), environment.getProperty("message-tracks.rejected"), conferenceTrack.getRemarks(), CommonStatus.REJECTED.toString());
+		notificationsService.saveNotification(conferenceTrack.getCreatedUser(), "Tracks", environment.getProperty("message-tracks.rejected"), conferenceTrack.getRemarks(), CommonStatus.REJECTED.toString());
 		
 		return environment.getProperty("common.rejected");
 	}

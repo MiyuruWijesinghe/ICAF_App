@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
 import com.devcrawlers.conference.management.model.KeynoteSpeakers;
+import com.devcrawlers.conference.management.resource.CommonApproveRejectResource;
 import com.devcrawlers.conference.management.resource.KeynoteSpeakersAddResource;
 import com.devcrawlers.conference.management.resource.KeynoteSpeakersUpdateResource;
 
@@ -23,5 +24,9 @@ public interface KeynoteSpeakersService {
 	public KeynoteSpeakers updateKeynoteSpeaker(int id, KeynoteSpeakersUpdateResource keynoteSpeakersUpdateResource);
 	
 	public String deleteKeynoteSpeaker(int id);
+	
+	public String approveKeynoteSpeaker(int id, CommonApproveRejectResource commonApproveRejectResource);
+
+	public String rejectKeynoteSpeaker(int id, CommonApproveRejectResource commonApproveRejectResource);
 	
 }

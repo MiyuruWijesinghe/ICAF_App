@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.devcrawlers.conference.management.model.KeynoteSpeakers;
+import com.devcrawlers.conference.management.resource.CommonApproveRejectResource;
 import com.devcrawlers.conference.management.resource.KeynoteSpeakersAddResource;
 import com.devcrawlers.conference.management.resource.KeynoteSpeakersUpdateResource;
 import com.devcrawlers.conference.management.resource.SuccessAndErrorDetailsResource;
@@ -151,5 +152,37 @@ public class KeynoteSpeakersController {
 		String message = keynoteSpeakersService.deleteKeynoteSpeaker(id);
 		SuccessAndErrorDetailsResource successDetailsDto = new SuccessAndErrorDetailsResource(message);
 		return new ResponseEntity<>(successDetailsDto, HttpStatus.CREATED);
+	}
+	
+	
+	/**
+	 * Approve keynote speaker.
+	 *
+	 * @param id - the id
+	 * @param commonApproveRejectResource - the common approve reject resource
+	 * @return the response entity
+	 */
+	@PutMapping(value = "/approve/{id}")
+	public ResponseEntity<Object> approveKeynoteSpeaker(@PathVariable(value = "id", required = true) int id,
+			@Valid @RequestBody CommonApproveRejectResource commonApproveRejectResource) {
+		String message = keynoteSpeakersService.approveKeynoteSpeaker(id, commonApproveRejectResource);
+		SuccessAndErrorDetailsResource successDetailsDto = new SuccessAndErrorDetailsResource(message);
+		return new ResponseEntity<>(successDetailsDto, HttpStatus.OK);
+	}
+	
+	
+	/**
+	 * Reject keynote speaker.
+	 *
+	 * @param id - the id
+	 * @param commonApproveRejectResource - the common approve reject resource
+	 * @return the response entity
+	 */
+	@PutMapping(value = "/reject/{id}")
+	public ResponseEntity<Object> rejectKeynoteSpeaker(@PathVariable(value = "id", required = true) int id,
+			@Valid @RequestBody CommonApproveRejectResource commonApproveRejectResource) {
+		String message = keynoteSpeakersService.rejectKeynoteSpeaker(id, commonApproveRejectResource);
+		SuccessAndErrorDetailsResource successDetailsDto = new SuccessAndErrorDetailsResource(message);
+		return new ResponseEntity<>(successDetailsDto, HttpStatus.OK);
 	}
 }

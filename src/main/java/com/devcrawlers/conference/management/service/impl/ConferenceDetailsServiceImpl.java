@@ -7,20 +7,21 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.devcrawlers.conference.management.enums.CommonStatus;
-import com.devcrawlers.conference.management.enums.NotificationType;
 import com.devcrawlers.conference.management.exception.NoRecordFoundException;
 import com.devcrawlers.conference.management.exception.ValidateRecordException;
 import com.devcrawlers.conference.management.model.Conference;
 import com.devcrawlers.conference.management.model.ConferenceDetails;
 import com.devcrawlers.conference.management.repository.ConferenceDetailsRepository;
 import com.devcrawlers.conference.management.repository.ConferenceRepository;
-import com.devcrawlers.conference.management.resource.ConferenceDetailsAddResource;
 import com.devcrawlers.conference.management.resource.CommonApproveRejectResource;
+import com.devcrawlers.conference.management.resource.ConferenceDetailsAddResource;
 import com.devcrawlers.conference.management.resource.ConferenceDetailsUpdateResource;
 import com.devcrawlers.conference.management.service.ConferenceDetailsService;
 import com.devcrawlers.conference.management.service.NotificationsService;
@@ -197,7 +198,7 @@ public class ConferenceDetailsServiceImpl implements ConferenceDetailsService {
 		conferenceDetails.setRejectedDate(null);
 		conferenceDetailsRepository.save(conferenceDetails);
 		
-		notificationsService.saveNotification(conferenceDetails.getCreatedUser(), NotificationType.CONFERENCE_DETAILS.toString(), environment.getProperty("message-confdetails.approved"), conferenceDetails.getRemarks(), CommonStatus.APPROVED.toString());
+		notificationsService.saveNotification(conferenceDetails.getCreatedUser(), "Conference Details", environment.getProperty("message-confdetails.approved"), conferenceDetails.getRemarks(), CommonStatus.APPROVED.toString());
 		
 		return environment.getProperty("common.approved");
 	}
@@ -219,7 +220,7 @@ public class ConferenceDetailsServiceImpl implements ConferenceDetailsService {
 		conferenceDetails.setApprovedDate(null);
 		conferenceDetailsRepository.save(conferenceDetails);
 		
-		notificationsService.saveNotification(conferenceDetails.getCreatedUser(), NotificationType.CONFERENCE_DETAILS.toString(), environment.getProperty("message-confdetails.rejected"), conferenceDetails.getRemarks(), CommonStatus.REJECTED.toString());
+		notificationsService.saveNotification(conferenceDetails.getCreatedUser(), "Conference Details", environment.getProperty("message-confdetails.rejected"), conferenceDetails.getRemarks(), CommonStatus.REJECTED.toString());
 		
 		return environment.getProperty("common.rejected");
 	}
