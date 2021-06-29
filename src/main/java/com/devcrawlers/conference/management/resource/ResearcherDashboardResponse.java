@@ -3,15 +3,11 @@ package com.devcrawlers.conference.management.resource;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
-public class ReviewerDashboardResponse {
+public class ResearcherDashboardResponse {
 
 	private String totalApprovedResearches;
 	
 	private String totalRejectedResearches;
-	
-	private String totalApprovedWorkshops;
-	
-	private String totalRejectedWorkshops;
 
 	public String getTotalApprovedResearches() {
 		return totalApprovedResearches;
@@ -27,22 +23,6 @@ public class ReviewerDashboardResponse {
 
 	public void setTotalRejectedResearches(String totalRejectedResearches) {
 		this.totalRejectedResearches = totalRejectedResearches;
-	}
-
-	public String getTotalApprovedWorkshops() {
-		return totalApprovedWorkshops;
-	}
-
-	public void setTotalApprovedWorkshops(String totalApprovedWorkshops) {
-		this.totalApprovedWorkshops = totalApprovedWorkshops;
-	}
-
-	public String getTotalRejectedWorkshops() {
-		return totalRejectedWorkshops;
-	}
-
-	public void setTotalRejectedWorkshops(String totalRejectedWorkshops) {
-		this.totalRejectedWorkshops = totalRejectedWorkshops;
 	}
 	
 }

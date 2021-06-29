@@ -22,4 +22,8 @@ public interface ResearchRepository extends MongoRepository<Research, Integer> {
 	public Optional<Research> findByName(String name);
 
 	public Optional<Research> findByNameAndIdNotIn(String name, int id);
+	
+	public Long countByStatus(String status);
+	
+	public Long countByStatusAndCreatedUser(String status, String createdUser);
 }

@@ -22,5 +22,9 @@ public interface WorkshopsRepository extends MongoRepository<Workshops, Integer>
 	public Optional<Workshops> findByName(String name);
 
 	public Optional<Workshops> findByNameAndIdNotIn(String name, int id);
+	
+	public Long countByStatus(String status);
+	
+	public Long countByStatusAndCreatedUser(String status, String createdUser);
 
 }
