@@ -80,7 +80,7 @@ public class RolesServiceImpl implements RolesService {
 	public Integer saveRole(RolesAddResource rolesAddResource) {
 		Roles roles = new Roles();
 		
-		Optional<Roles> isPresentRole = rolesRepository.findByName(rolesAddResource.getName());
+		Optional<Roles> isPresentRole = rolesRepository.findByName("ROLE_" + rolesAddResource.getName());
         if (isPresentRole.isPresent()) {
         	throw new ValidateRecordException(environment.getProperty("role.duplicate"), "message");
 		}
