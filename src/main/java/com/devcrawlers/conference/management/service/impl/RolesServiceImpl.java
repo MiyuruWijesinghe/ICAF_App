@@ -3,12 +3,15 @@ package com.devcrawlers.conference.management.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.devcrawlers.conference.management.enums.CommonStatus;
 import com.devcrawlers.conference.management.exception.NoRecordFoundException;
+import com.devcrawlers.conference.management.exception.ValidateRecordException;
 import com.devcrawlers.conference.management.model.Roles;
 import com.devcrawlers.conference.management.repository.RolesRepository;
 import com.devcrawlers.conference.management.resource.RolesAddResource;
@@ -64,8 +67,24 @@ public class RolesServiceImpl implements RolesService {
 	}
 	
 	@Override
+	public Optional<Roles> findByName(String name) {
+		Optional<Roles> roles = rolesRepository.findByName(name);
+		if (roles.isPresent()) {
+			return Optional.ofNullable(roles.get());
+		} else {
+			return Optional.empty();
+		}
+	}
+	
+	@Override
 	public Integer saveRole(RolesAddResource rolesAddResource) {
 		Roles roles = new Roles();
+		
+		Optional<Roles> isPresentRole = rolesRepository.findByName(rolesAddResource.getName());
+        if (isPresentRole.isPresent()) {
+        	throw new ValidateRecordException(environment.getProperty("role.duplicate"), "message");
+		}
+		
 		roles.setId(generateId());
 		roles.setName("ROLE_" + rolesAddResource.getName());
 		roles.setStatus(CommonStatus.ACTIVE.toString());

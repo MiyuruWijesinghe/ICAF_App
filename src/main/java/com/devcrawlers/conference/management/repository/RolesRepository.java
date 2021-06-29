@@ -22,4 +22,6 @@ public interface RolesRepository extends MongoRepository<Roles, Integer> {
 
 	public Optional<Roles> findByIdAndStatus(int id, String status);
 
+	public Optional<Roles> findByName(String name);
+
 }

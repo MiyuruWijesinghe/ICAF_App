@@ -86,6 +86,25 @@ public class RolesController {
 	
 	
 	/**
+	 * Gets the role by name.
+	 *
+	 * @param name - the name
+	 * @return the role by name
+	 */
+	@GetMapping(value = "/name/{name}")
+	public ResponseEntity<Object> getRoleByName(@PathVariable(value = "name", required = true) String name) {
+		SuccessAndErrorDetailsResource responseMessage = new SuccessAndErrorDetailsResource();
+		Optional<Roles> isPresentRoles = rolesService.findByName(name);
+		if (isPresentRoles.isPresent()) {
+			return new ResponseEntity<>(isPresentRoles, HttpStatus.OK);
+		} else {
+			responseMessage.setMessages(environment.getProperty("common.record-not-found"));
+			return new ResponseEntity<>(responseMessage, HttpStatus.NO_CONTENT);
+		}
+	}
+	
+	
+	/**
 	 * Adds the role.
 	 *
 	 * @param rolesAddResource - the roles add resource
