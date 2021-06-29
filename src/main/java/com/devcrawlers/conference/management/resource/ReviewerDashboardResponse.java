@@ -5,13 +5,25 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class ReviewerDashboardResponse {
 
+	private String totalPendingResearches;
+	
 	private String totalApprovedResearches;
 	
 	private String totalRejectedResearches;
 	
+	private String totalPendingWorkshops;
+	
 	private String totalApprovedWorkshops;
 	
 	private String totalRejectedWorkshops;
+	
+	public String getTotalPendingResearches() {
+		return totalPendingResearches;
+	}
+
+	public void setTotalPendingResearches(String totalPendingResearches) {
+		this.totalPendingResearches = totalPendingResearches;
+	}
 
 	public String getTotalApprovedResearches() {
 		return totalApprovedResearches;
@@ -29,6 +41,14 @@ public class ReviewerDashboardResponse {
 		this.totalRejectedResearches = totalRejectedResearches;
 	}
 
+	public String getTotalPendingWorkshops() {
+		return totalPendingWorkshops;
+	}
+
+	public void setTotalPendingWorkshops(String totalPendingWorkshops) {
+		this.totalPendingWorkshops = totalPendingWorkshops;
+	}
+	
 	public String getTotalApprovedWorkshops() {
 		return totalApprovedWorkshops;
 	}

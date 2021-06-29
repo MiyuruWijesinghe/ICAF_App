@@ -82,13 +82,17 @@ public class DashboardServiceImpl implements DashboardService {
 		
 		ReviewerDashboardResponse reviewerDashboardResponse = new ReviewerDashboardResponse();
 		
+		Long totalPendingResearches = researchRepository.countByStatus(CommonStatus.PENDING.toString());
 		Long totalApprovedResearches = researchRepository.countByStatus(CommonStatus.APPROVED.toString());
 		Long totalRejectedResearches = researchRepository.countByStatus(CommonStatus.REJECTED.toString());
+		Long totalPendingWorkshops = workshopsRepository.countByStatus(CommonStatus.PENDING.toString());
 		Long totalApprovedWorkshops = workshopsRepository.countByStatus(CommonStatus.APPROVED.toString());
 		Long totalRejectedWorkshops = workshopsRepository.countByStatus(CommonStatus.REJECTED.toString());
 		
+		reviewerDashboardResponse.setTotalPendingResearches(totalPendingResearches.toString());
 		reviewerDashboardResponse.setTotalApprovedResearches(totalApprovedResearches.toString());
 		reviewerDashboardResponse.setTotalRejectedResearches(totalRejectedResearches.toString());
+		reviewerDashboardResponse.setTotalPendingWorkshops(totalPendingWorkshops.toString());
 		reviewerDashboardResponse.setTotalApprovedWorkshops(totalApprovedWorkshops.toString());
 		reviewerDashboardResponse.setTotalRejectedWorkshops(totalRejectedWorkshops.toString());
 		
@@ -100,9 +104,11 @@ public class DashboardServiceImpl implements DashboardService {
 		
 		ResearcherDashboardResponse researcherDashboardResponse = new ResearcherDashboardResponse();
 		
+		Long totalPendingResearches = researchRepository.countByStatusAndCreatedUser(CommonStatus.PENDING.toString(), user);
 		Long totalApprovedResearches = researchRepository.countByStatusAndCreatedUser(CommonStatus.APPROVED.toString(), user);
 		Long totalRejectedResearches = researchRepository.countByStatusAndCreatedUser(CommonStatus.REJECTED.toString(), user);
 		
+		researcherDashboardResponse.setTotalPendingResearches(totalPendingResearches.toString());
 		researcherDashboardResponse.setTotalApprovedResearches(totalApprovedResearches.toString());
 		researcherDashboardResponse.setTotalRejectedResearches(totalRejectedResearches.toString());
 		
@@ -114,9 +120,11 @@ public class DashboardServiceImpl implements DashboardService {
 		
 		WorkshopConductorDashboardResponse workshopConductorDashboardResponse = new WorkshopConductorDashboardResponse();
 		
+		Long totalPendingWorkshops = workshopsRepository.countByStatusAndCreatedUser(CommonStatus.PENDING.toString(), user);
 		Long totalApprovedWorkshops = workshopsRepository.countByStatusAndCreatedUser(CommonStatus.APPROVED.toString(), user);
 		Long totalRejectedWorkshops = workshopsRepository.countByStatusAndCreatedUser(CommonStatus.REJECTED.toString(), user);
 		
+		workshopConductorDashboardResponse.setTotalPendingWorkshops(totalPendingWorkshops.toString());
 		workshopConductorDashboardResponse.setTotalApprovedWorkshops(totalApprovedWorkshops.toString());
 		workshopConductorDashboardResponse.setTotalRejectedWorkshops(totalRejectedWorkshops.toString());
 		
