@@ -24,6 +24,10 @@ public class ConferenceUpdateResource {
 	private String venue;
 	
 	@NotBlank(message = "{common.not-null}")
+	@Pattern(regexp = "^$|\\d{1,20}\\.\\d{1,2}$",message="{common-amount.pattern}")
+	private String payment;
+	
+	@NotBlank(message = "{common.not-null}")
 	@Pattern(regexp = "ACTIVE|INACTIVE", message = "{common-status.pattern}")
 	private String status;
 
@@ -57,6 +61,14 @@ public class ConferenceUpdateResource {
 
 	public void setVenue(String venue) {
 		this.venue = venue;
+	}
+
+	public String getPayment() {
+		return payment;
+	}
+
+	public void setPayment(String payment) {
+		this.payment = payment;
 	}
 
 	public String getStatus() {

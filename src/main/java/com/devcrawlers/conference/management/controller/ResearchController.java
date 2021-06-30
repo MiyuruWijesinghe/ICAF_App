@@ -115,15 +115,15 @@ public class ResearchController {
 	
 	
 	/**
-	 * Gets the research by conference details id.
+	 * Gets the research by conference tracks id.
 	 *
-	 * @param conferenceDetailsId - the conference details id
-	 * @return the research by conference details id
+	 * @param conferenceTracksId - the conference tracks id
+	 * @return the research by conference tracks id
 	 */
-	@GetMapping(value = "/conference-details/{conferenceDetailsId}")
-	public ResponseEntity<Object> getResearchByConferenceDetailsId(@PathVariable(value = "conferenceDetailsId", required = true) int conferenceDetailsId) {
+	@GetMapping(value = "/conference-tracks/{conferenceTracksId}")
+	public ResponseEntity<Object> getResearchByConferenceTracksId(@PathVariable(value = "conferenceTracksId", required = true) int conferenceTracksId) {
 		SuccessAndErrorDetailsResource responseMessage = new SuccessAndErrorDetailsResource();
-		List<Research> research = researchService.findByConferenceDetailsId(conferenceDetailsId);
+		List<Research> research = researchService.findByConferenceTracksId(conferenceTracksId);
 		if (!research.isEmpty()) {
 			return new ResponseEntity<>((Collection<Research>) research, HttpStatus.OK);
 		} else {
@@ -134,15 +134,15 @@ public class ResearchController {
 	
 	
 	/**
-	 * Gets the research by conference details topic.
+	 * Gets the research by conference tracks name.
 	 *
-	 * @param topic - the topic
-	 * @return the research by conference details topic
+	 * @param name - the name
+	 * @return the research by conference tracks name
 	 */
-	@GetMapping(value = "/conference-details/topic/{topic}")
-	public ResponseEntity<Object> getResearchByConferenceDetailsTopic(@PathVariable(value = "topic", required = true) String topic) {
+	@GetMapping(value = "/conference-tracks/name/{name}")
+	public ResponseEntity<Object> getResearchByConferenceTracksName(@PathVariable(value = "name", required = true) String name) {
 		SuccessAndErrorDetailsResource responseMessage = new SuccessAndErrorDetailsResource();
-		List<Research> research = researchService.findByConferenceDetailsTopic(topic);
+		List<Research> research = researchService.findByConferenceTracksName(name);
 		if (!research.isEmpty()) {
 			return new ResponseEntity<>((Collection<Research>) research, HttpStatus.OK);
 		} else {

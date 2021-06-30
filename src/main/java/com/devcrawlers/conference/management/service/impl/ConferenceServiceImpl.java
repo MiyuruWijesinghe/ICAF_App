@@ -1,5 +1,6 @@
 package com.devcrawlers.conference.management.service.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -93,6 +94,7 @@ public class ConferenceServiceImpl implements ConferenceService {
 		conference.setName(conferenceAddResource.getName());
 		conference.setDescription(conferenceAddResource.getDescription());
 		conference.setVenue(conferenceAddResource.getVenue());
+		conference.setPayment(new BigDecimal(conferenceAddResource.getPayment()));
 		conference.setStatus(CommonStatus.ACTIVE.toString());
 		conferenceRepository.save(conference);
 		return conference.getId();
@@ -114,6 +116,7 @@ public class ConferenceServiceImpl implements ConferenceService {
 		conference.setName(conferenceUpdateResource.getName());
 		conference.setDescription(conferenceUpdateResource.getDescription());
 		conference.setVenue(conferenceUpdateResource.getVenue());
+		conference.setPayment(new BigDecimal(conferenceUpdateResource.getPayment()));
 		conference.setStatus(conferenceUpdateResource.getStatus());
 		conferenceRepository.save(conference);
 		return conference;

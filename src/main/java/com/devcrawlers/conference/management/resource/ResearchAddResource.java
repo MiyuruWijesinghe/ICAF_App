@@ -11,7 +11,7 @@ public class ResearchAddResource {
 
 	@NotBlank(message = "{common.not-null}")
 	@Pattern(regexp = "^$|[0-9]+", message = "{common-numeric.pattern}")
-	private String conferenceDetailsId;
+	private String conferenceTracksId;
 	
 	@NotBlank(message = "{common.not-null}")
 	@Size(max = 70, message = "{common-name.size}")
@@ -26,12 +26,12 @@ public class ResearchAddResource {
 	@NotBlank(message = "{common.not-null}")
 	private String documentURL;
 
-	public String getConferenceDetailsId() {
-		return conferenceDetailsId;
+	public String getConferenceTracksId() {
+		return conferenceTracksId;
 	}
 
-	public void setConferenceDetailsId(String conferenceDetailsId) {
-		this.conferenceDetailsId = conferenceDetailsId;
+	public void setConferenceTracksId(String conferenceTracksId) {
+		this.conferenceTracksId = conferenceTracksId;
 	}
 
 	public String getName() {

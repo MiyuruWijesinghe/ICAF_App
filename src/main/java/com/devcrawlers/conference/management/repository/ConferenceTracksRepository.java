@@ -16,4 +16,6 @@ public interface ConferenceTracksRepository extends MongoRepository<ConferenceTr
 	public Optional<ConferenceTracks> findByName(String name);
 
 	public Optional<ConferenceTracks> findByNameAndIdNotIn(String name, int id);
+
+	public Optional<ConferenceTracks> findByIdAndStatus(int id, String status);
 }

@@ -13,9 +13,9 @@ public interface WorkshopsRepository extends MongoRepository<Workshops, Integer>
 	
 	public List<Workshops> findByNameContaining(String name);
 
-	public List<Workshops> findByConferenceDetailId(int conferenceDetailsId);
+	public List<Workshops> findByConferenceTrackId(int conferenceTracksId);
 
-	public List<Workshops> findByConferenceDetailTopic(String conferenceDetailsTopic);
+	public List<Workshops> findByConferenceTrackName(String conferenceTracksName);
 
 	public List<Workshops> findByCreatedUser(String createdUser);
 

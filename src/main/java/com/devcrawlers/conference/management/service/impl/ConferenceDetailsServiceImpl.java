@@ -1,6 +1,5 @@
 package com.devcrawlers.conference.management.service.impl;
 
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -119,12 +118,6 @@ public class ConferenceDetailsServiceImpl implements ConferenceDetailsService {
         conferenceDetails.setId(generateId());
         conferenceDetails.setTopic(conferenceDetailsAddResource.getTopic());
         conferenceDetails.setDescription(conferenceDetailsAddResource.getDescription());
-        conferenceDetails.setConductor(conferenceDetailsAddResource.getConductor());
-		conferenceDetails.setVenue(conferenceDetailsAddResource.getVenue());
-		conferenceDetails.setDate(conferenceDetailsAddResource.getDate());
-		conferenceDetails.setStartTime(conferenceDetailsAddResource.getStartTime());
-		conferenceDetails.setEndTime(conferenceDetailsAddResource.getEndTime());
-		conferenceDetails.setPayment(new BigDecimal(conferenceDetailsAddResource.getPayment()));
 		conferenceDetails.setStatus(CommonStatus.PENDING.toString());
 		conferenceDetails.setCreatedUser("MKW");
 		conferenceDetails.setCreatedDate(formatDate(new Date()));
@@ -147,12 +140,6 @@ public class ConferenceDetailsServiceImpl implements ConferenceDetailsService {
 		ConferenceDetails conferenceDetails = isPresentConferenceDetails.get();
 		conferenceDetails.setTopic(conferenceDetailsUpdateResource.getTopic());
         conferenceDetails.setDescription(conferenceDetailsUpdateResource.getDescription());
-        conferenceDetails.setConductor(conferenceDetailsUpdateResource.getConductor());
-		conferenceDetails.setVenue(conferenceDetailsUpdateResource.getVenue());
-		conferenceDetails.setDate(conferenceDetailsUpdateResource.getDate());
-		conferenceDetails.setStartTime(conferenceDetailsUpdateResource.getStartTime());
-		conferenceDetails.setEndTime(conferenceDetailsUpdateResource.getEndTime());
-		conferenceDetails.setPayment(new BigDecimal(conferenceDetailsUpdateResource.getPayment()));
 		conferenceDetails.setStatus(CommonStatus.PENDING.toString());
 		conferenceDetails.setCreatedUser("MKW");
 		conferenceDetails.setCreatedDate(formatDate(new Date()));

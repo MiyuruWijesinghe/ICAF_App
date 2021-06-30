@@ -14,13 +14,13 @@ public class Research {
 	private Integer id;
 	
 	@JsonIgnore
-	private ConferenceDetails conferenceDetail;
+	private ConferenceTracks conferenceTrack;
 	
 	@Transient
-    private Integer conferenceDetailsId;
+    private Integer conferenceTracksId;
 	
 	@Transient
-    private String topic;
+    private String conferenceTracksName;
 	
 	private String name;
 	
@@ -54,12 +54,12 @@ public class Research {
 		this.id = id;
 	}
 
-	public ConferenceDetails getConferenceDetail() {
-		return conferenceDetail;
+	public ConferenceTracks getConferenceTrack() {
+		return conferenceTrack;
 	}
 
-	public void setConferenceDetail(ConferenceDetails conferenceDetail) {
-		this.conferenceDetail = conferenceDetail;
+	public void setConferenceTrack(ConferenceTracks conferenceTrack) {
+		this.conferenceTrack = conferenceTrack;
 	}
 
 	public String getName() {
@@ -158,17 +158,17 @@ public class Research {
 		this.rejectedDate = rejectedDate;
 	}
 	
-	public Integer getConferenceDetailsId() {
-		if(conferenceDetail != null) {
-			return conferenceDetail.getId();
+	public Integer getconferenceTracksId() {
+		if(conferenceTrack != null) {
+			return conferenceTrack.getId();
 		} else {
 			return null;
 		}
 	}
 
-	public String getTopic() {
-		if(conferenceDetail != null) {
-			return conferenceDetail.getTopic();
+	public String getconferenceTracksName() {
+		if(conferenceTrack != null) {
+			return conferenceTrack.getName();
 		} else {
 			return null;
 		}

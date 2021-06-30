@@ -14,19 +14,31 @@ public class Workshops {
 	private Integer id;
 	
 	@JsonIgnore
-	private ConferenceDetails conferenceDetail;
+	private ConferenceTracks conferenceTrack;
 	
 	@Transient
-    private Integer conferenceDetailsId;
+    private Integer conferenceTracksId;
 	
 	@Transient
-    private String topic;
+    private String conferenceTracksName;
 	
 	private String name;
 	
 	private String description;
 	
 	private String documentURL;
+	
+	private String conductor;
+	
+	private String imageURL;
+	
+	private String venue;
+	
+	private String date;
+	
+	private String startTime;
+	
+	private String endTime;
 	
 	private String status;
 	
@@ -52,12 +64,12 @@ public class Workshops {
 		this.id = id;
 	}
 
-	public ConferenceDetails getConferenceDetail() {
-		return conferenceDetail;
+	public ConferenceTracks getConferenceTrack() {
+		return conferenceTrack;
 	}
 
-	public void setConferenceDetail(ConferenceDetails conferenceDetail) {
-		this.conferenceDetail = conferenceDetail;
+	public void setConferenceTrack(ConferenceTracks conferenceTrack) {
+		this.conferenceTrack = conferenceTrack;
 	}
 
 	public String getName() {
@@ -82,6 +94,54 @@ public class Workshops {
 
 	public void setDocumentURL(String documentURL) {
 		this.documentURL = documentURL;
+	}
+
+	public String getConductor() {
+		return conductor;
+	}
+
+	public void setConductor(String conductor) {
+		this.conductor = conductor;
+	}
+
+	public String getImageURL() {
+		return imageURL;
+	}
+
+	public void setImageURL(String imageURL) {
+		this.imageURL = imageURL;
+	}
+
+	public String getVenue() {
+		return venue;
+	}
+
+	public void setVenue(String venue) {
+		this.venue = venue;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public String getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+
+	public String getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
 	}
 
 	public String getStatus() {
@@ -148,17 +208,17 @@ public class Workshops {
 		this.rejectedDate = rejectedDate;
 	}
 
-	public Integer getConferenceDetailsId() {
-		if(conferenceDetail != null) {
-			return conferenceDetail.getId();
+	public Integer getconferenceTracksId() {
+		if(conferenceTrack != null) {
+			return conferenceTrack.getId();
 		} else {
 			return null;
 		}
 	}
 
-	public String getTopic() {
-		if(conferenceDetail != null) {
-			return conferenceDetail.getTopic();
+	public String getconferenceTracksName() {
+		if(conferenceTrack != null) {
+			return conferenceTrack.getName();
 		} else {
 			return null;
 		}

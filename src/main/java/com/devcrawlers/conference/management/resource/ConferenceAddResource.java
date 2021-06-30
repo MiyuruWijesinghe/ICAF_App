@@ -23,6 +23,10 @@ public class ConferenceAddResource {
 	@NotBlank(message = "{common.not-null}")
 	private String venue;
 
+	@NotBlank(message = "{common.not-null}")
+	@Pattern(regexp = "^$|\\d{1,20}\\.\\d{1,2}$",message="{common-amount.pattern}")
+	private String payment;
+	
 	public String getYear() {
 		return year;
 	}
@@ -53,6 +57,14 @@ public class ConferenceAddResource {
 
 	public void setVenue(String venue) {
 		this.venue = venue;
+	}
+
+	public String getPayment() {
+		return payment;
+	}
+
+	public void setPayment(String payment) {
+		this.payment = payment;
 	}
 	
 }

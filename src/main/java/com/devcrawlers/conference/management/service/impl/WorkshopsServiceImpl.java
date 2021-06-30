@@ -14,9 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.devcrawlers.conference.management.enums.CommonStatus;
 import com.devcrawlers.conference.management.exception.NoRecordFoundException;
 import com.devcrawlers.conference.management.exception.ValidateRecordException;
-import com.devcrawlers.conference.management.model.ConferenceDetails;
+import com.devcrawlers.conference.management.model.ConferenceTracks;
 import com.devcrawlers.conference.management.model.Workshops;
-import com.devcrawlers.conference.management.repository.ConferenceDetailsRepository;
+import com.devcrawlers.conference.management.repository.ConferenceTracksRepository;
 import com.devcrawlers.conference.management.repository.WorkshopsRepository;
 import com.devcrawlers.conference.management.resource.CommonApproveRejectResource;
 import com.devcrawlers.conference.management.resource.WorkshopsAddResource;
@@ -36,7 +36,7 @@ public class WorkshopsServiceImpl implements WorkshopsService {
 	private WorkshopsRepository workshopsRepository;
 	
 	@Autowired
-	private ConferenceDetailsRepository conferenceDetailsRepository;
+	private ConferenceTracksRepository conferenceTracksRepository;
 	
 	@Autowired
 	private NotificationsService notificationsService;
@@ -84,13 +84,13 @@ public class WorkshopsServiceImpl implements WorkshopsService {
 	}
 	
 	@Override
-	public List<Workshops> findByConferenceDetailsId(int conferenceDetailsId) {
-		return workshopsRepository.findByConferenceDetailId(conferenceDetailsId);
+	public List<Workshops> findByConferenceTracksId(int conferenceTracksId) {
+		return workshopsRepository.findByConferenceTrackId(conferenceTracksId);
 	}
 
 	@Override
-	public List<Workshops> findByConferenceDetailsTopic(String conferenceDetailsTopic) {
-		return workshopsRepository.findByConferenceDetailTopic(conferenceDetailsTopic);
+	public List<Workshops> findByConferenceTracksName(String conferenceTracksName) {
+		return workshopsRepository.findByConferenceTrackName(conferenceTracksName);
 	}
 
 	@Override
@@ -108,17 +108,23 @@ public class WorkshopsServiceImpl implements WorkshopsService {
         	throw new ValidateRecordException(environment.getProperty("workshop.duplicate"), "message");
 		}
         
-        Optional<ConferenceDetails> conferenceDetails = conferenceDetailsRepository.findByIdAndStatus(Integer.parseInt(workshopsAddResource.getConferenceDetailsId()), CommonStatus.APPROVED.toString());
-		if (!conferenceDetails.isPresent()) {
-			throw new ValidateRecordException(environment.getProperty("conference-details.invalid-value"), "message");
+        Optional<ConferenceTracks> conferenceTracks = conferenceTracksRepository.findByIdAndStatus(Integer.parseInt(workshopsAddResource.getConferenceTracksId()), CommonStatus.APPROVED.toString());
+		if (!conferenceTracks.isPresent()) {
+			throw new ValidateRecordException(environment.getProperty("conference-tracks.invalid-value"), "message");
 		} else {
-			workshops.setConferenceDetail(conferenceDetails.get());
+			workshops.setConferenceTrack(conferenceTracks.get());
 		}
 		
 		workshops.setId(generateId());
 		workshops.setName(workshopsAddResource.getName());
 		workshops.setDescription(workshopsAddResource.getDescription());
 		workshops.setDocumentURL(workshopsAddResource.getDocumentURL());
+		workshops.setConductor(workshopsAddResource.getConductor());
+		workshops.setImageURL(workshopsAddResource.getImageURL());
+		workshops.setVenue(workshopsAddResource.getVenue());
+		workshops.setDate(workshopsAddResource.getDate());
+		workshops.setStartTime(workshopsAddResource.getStartTime());
+		workshops.setEndTime(workshopsAddResource.getEndTime());
 		workshops.setStatus(CommonStatus.PENDING.toString());
 		workshops.setCreatedUser("MKW");
 		workshops.setCreatedDate(formatDate(new Date()));
@@ -142,6 +148,12 @@ public class WorkshopsServiceImpl implements WorkshopsService {
 		workshops.setName(workshopsUpdateResource.getName());
 		workshops.setDescription(workshopsUpdateResource.getDescription());
 		workshops.setDocumentURL(workshopsUpdateResource.getDocumentURL());
+		workshops.setConductor(workshopsUpdateResource.getConductor());
+		workshops.setImageURL(workshopsUpdateResource.getImageURL());
+		workshops.setVenue(workshopsUpdateResource.getVenue());
+		workshops.setDate(workshopsUpdateResource.getDate());
+		workshops.setStartTime(workshopsUpdateResource.getStartTime());
+		workshops.setEndTime(workshopsUpdateResource.getEndTime());
 		workshops.setStatus(CommonStatus.PENDING.toString());
 		workshops.setCreatedUser("MKW");
 		workshops.setCreatedDate(formatDate(new Date()));

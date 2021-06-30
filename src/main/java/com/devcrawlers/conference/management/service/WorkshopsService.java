@@ -19,9 +19,9 @@ public interface WorkshopsService {
 	
 	public List<Workshops> findByName(String name);
 	
-	public List<Workshops> findByConferenceDetailsId(int conferenceDetailsId);
+	public List<Workshops> findByConferenceTracksId(int conferenceTracksId);
 	
-	public List<Workshops> findByConferenceDetailsTopic(String conferenceDetailsTopic);
+	public List<Workshops> findByConferenceTracksName(String conferenceTracksName);
 	
 	public List<Workshops> findByCreatedUser(String createdUser);
 	

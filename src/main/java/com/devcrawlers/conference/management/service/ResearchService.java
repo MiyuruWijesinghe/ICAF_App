@@ -21,9 +21,9 @@ public interface ResearchService {
 	
 	public List<Research> findByName(String name);
 	
-	public List<Research> findByConferenceDetailsId(int conferenceDetailsId);
+	public List<Research> findByConferenceTracksId(int conferenceTracksId);
 	
-	public List<Research> findByConferenceDetailsTopic(String conferenceDetailsTopic);
+	public List<Research> findByConferenceTracksName(String conferenceTracksName);
 	
 	public List<Research> findByCreatedUser(String createdUser);
 	

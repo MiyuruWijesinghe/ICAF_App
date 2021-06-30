@@ -14,9 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.devcrawlers.conference.management.enums.CommonStatus;
 import com.devcrawlers.conference.management.exception.NoRecordFoundException;
 import com.devcrawlers.conference.management.exception.ValidateRecordException;
-import com.devcrawlers.conference.management.model.ConferenceDetails;
+import com.devcrawlers.conference.management.model.ConferenceTracks;
 import com.devcrawlers.conference.management.model.Research;
-import com.devcrawlers.conference.management.repository.ConferenceDetailsRepository;
+import com.devcrawlers.conference.management.repository.ConferenceTracksRepository;
 import com.devcrawlers.conference.management.repository.ResearchRepository;
 import com.devcrawlers.conference.management.resource.CommonApproveRejectResource;
 import com.devcrawlers.conference.management.resource.ResearchAddResource;
@@ -36,7 +36,7 @@ public class ResearchServiceImpl implements ResearchService {
 	private ResearchRepository researchRepository;
 	
 	@Autowired
-	private ConferenceDetailsRepository conferenceDetailsRepository;
+	private ConferenceTracksRepository conferenceTracksRepository;
 	
 	@Autowired
 	private NotificationsService notificationsService;
@@ -84,13 +84,13 @@ public class ResearchServiceImpl implements ResearchService {
 	}
 
 	@Override
-	public List<Research> findByConferenceDetailsId(int conferenceDetailsId) {
-		return researchRepository.findByConferenceDetailId(conferenceDetailsId);
+	public List<Research> findByConferenceTracksId(int conferenceTracksId) {
+		return researchRepository.findByConferenceTrackId(conferenceTracksId);
 	}
 
 	@Override
-	public List<Research> findByConferenceDetailsTopic(String conferenceDetailsTopic) {
-		return researchRepository.findByConferenceDetailTopic(conferenceDetailsTopic);
+	public List<Research> findByConferenceTracksName(String conferenceTracksName) {
+		return researchRepository.findByConferenceTrackName(conferenceTracksName);
 	}
 
 	@Override
@@ -108,11 +108,11 @@ public class ResearchServiceImpl implements ResearchService {
         	throw new ValidateRecordException(environment.getProperty("research.duplicate"), "message");
 		}
         
-        Optional<ConferenceDetails> conferenceDetails = conferenceDetailsRepository.findByIdAndStatus(Integer.parseInt(researchAddResource.getConferenceDetailsId()), CommonStatus.APPROVED.toString());
-		if (!conferenceDetails.isPresent()) {
-			throw new ValidateRecordException(environment.getProperty("conference-details.invalid-value"), "message");
+        Optional<ConferenceTracks> conferenceTracks = conferenceTracksRepository.findByIdAndStatus(Integer.parseInt(researchAddResource.getConferenceTracksId()), CommonStatus.APPROVED.toString());
+		if (!conferenceTracks.isPresent()) {
+			throw new ValidateRecordException(environment.getProperty("conference-tracks.invalid-value"), "message");
 		} else {
-			research.setConferenceDetail(conferenceDetails.get());
+			research.setConferenceTrack(conferenceTracks.get());
 		}
 		
 		research.setId(generateId());

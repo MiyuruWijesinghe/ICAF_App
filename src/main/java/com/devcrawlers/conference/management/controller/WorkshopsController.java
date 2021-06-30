@@ -115,15 +115,15 @@ public class WorkshopsController {
 	
 	
 	/**
-	 * Gets the workshops by conference details id.
+	 * Gets the workshops by conference tracks id.
 	 *
-	 * @param conferenceDetailsId - the conference details id
-	 * @return the workshops by conference details id
+	 * @param conferenceTracksId - the conference tracks id
+	 * @return the workshops by conference tracks id
 	 */
-	@GetMapping(value = "/conference-details/{conferenceDetailsId}")
-	public ResponseEntity<Object> getWorkshopsByConferenceDetailsId(@PathVariable(value = "conferenceDetailsId", required = true) int conferenceDetailsId) {
+	@GetMapping(value = "/conference-tracks/{conferenceTracksId}")
+	public ResponseEntity<Object> getWorkshopsByConferenceTracksId(@PathVariable(value = "conferenceTracksId", required = true) int conferenceTracksId) {
 		SuccessAndErrorDetailsResource responseMessage = new SuccessAndErrorDetailsResource();
-		List<Workshops> workshops = workshopsService.findByConferenceDetailsId(conferenceDetailsId);
+		List<Workshops> workshops = workshopsService.findByConferenceTracksId(conferenceTracksId);
 		if (!workshops.isEmpty()) {
 			return new ResponseEntity<>((Collection<Workshops>) workshops, HttpStatus.OK);
 		} else {
@@ -134,15 +134,15 @@ public class WorkshopsController {
 	
 	
 	/**
-	 * Gets the workshops by conference details topic.
+	 * Gets the workshops by conference tracks name.
 	 *
-	 * @param topic - the topic
-	 * @return the workshops by conference details topic
+	 * @param name - the name
+	 * @return the workshops by conference tracks name
 	 */
-	@GetMapping(value = "/conference-details/topic/{topic}")
-	public ResponseEntity<Object> getWorkshopsByConferenceDetailsTopic(@PathVariable(value = "topic", required = true) String topic) {
+	@GetMapping(value = "/conference-tracks/name/{name}")
+	public ResponseEntity<Object> getWorkshopsByConferenceTracksName(@PathVariable(value = "name", required = true) String name) {
 		SuccessAndErrorDetailsResource responseMessage = new SuccessAndErrorDetailsResource();
-		List<Workshops> workshops = workshopsService.findByConferenceDetailsTopic(topic);
+		List<Workshops> workshops = workshopsService.findByConferenceTracksName(name);
 		if (!workshops.isEmpty()) {
 			return new ResponseEntity<>((Collection<Workshops>) workshops, HttpStatus.OK);
 		} else {

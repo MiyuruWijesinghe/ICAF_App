@@ -1,5 +1,7 @@
 package com.devcrawlers.conference.management.model;
 
+import java.math.BigDecimal;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -27,6 +29,8 @@ public class Conference {
 	private String description;
 	
 	private String venue;
+	
+	private BigDecimal payment;
 	
 	private String status;
 
@@ -68,6 +72,14 @@ public class Conference {
 
 	public void setVenue(String venue) {
 		this.venue = venue;
+	}
+
+	public BigDecimal getPayment() {
+		return payment;
+	}
+
+	public void setPayment(BigDecimal payment) {
+		this.payment = payment;
 	}
 
 	public String getStatus() {

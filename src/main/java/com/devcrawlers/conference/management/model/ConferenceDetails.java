@@ -1,7 +1,5 @@
 package com.devcrawlers.conference.management.model;
 
-import java.math.BigDecimal;
-
 import javax.persistence.Transient;
 
 import org.springframework.data.annotation.Id;
@@ -30,18 +28,6 @@ public class ConferenceDetails {
 	private String topic;
 	
 	private String description;
-	
-	private String conductor;
-	
-	private String venue;
-	
-	private String date;
-	
-	private String startTime;
-	
-	private String endTime;
-	
-	private BigDecimal payment;
 	
 	private String status;
 	
@@ -89,54 +75,6 @@ public class ConferenceDetails {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public String getConductor() {
-		return conductor;
-	}
-
-	public void setConductor(String conductor) {
-		this.conductor = conductor;
-	}
-
-	public String getVenue() {
-		return venue;
-	}
-
-	public void setVenue(String venue) {
-		this.venue = venue;
-	}
-
-	public String getDate() {
-		return date;
-	}
-
-	public void setDate(String date) {
-		this.date = date;
-	}
-
-	public String getStartTime() {
-		return startTime;
-	}
-
-	public void setStartTime(String startTime) {
-		this.startTime = startTime;
-	}
-
-	public String getEndTime() {
-		return endTime;
-	}
-
-	public void setEndTime(String endTime) {
-		this.endTime = endTime;
-	}
-
-	public BigDecimal getPayment() {
-		return payment;
-	}
-
-	public void setPayment(BigDecimal payment) {
-		this.payment = payment;
 	}
 
 	public String getStatus() {

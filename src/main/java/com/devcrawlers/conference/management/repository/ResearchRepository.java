@@ -13,9 +13,9 @@ public interface ResearchRepository extends MongoRepository<Research, Integer> {
 
 	public List<Research> findByNameContaining(String name);
 
-	public List<Research> findByConferenceDetailId(int conferenceDetailsId);
+	public List<Research> findByConferenceTrackId(int conferenceTracksId);
 
-	public List<Research> findByConferenceDetailTopic(String conferenceDetailsTopic);
+	public List<Research> findByConferenceTrackName(String conferenceTracksName);
 
 	public List<Research> findByCreatedUser(String createdUser);
 
