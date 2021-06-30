@@ -1,7 +1,6 @@
 package com.devcrawlers.conference.management.model;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 import javax.persistence.Transient;
 
@@ -29,7 +28,7 @@ public class Payments {
 	
 	private String description;
 	
-	private Date transactionDate;
+	private String transactionDate;
 	
 	private BigDecimal amount;
 	
@@ -67,11 +66,11 @@ public class Payments {
 		this.description = description;
 	}
 
-	public Date getTransactionDate() {
+	public String getTransactionDate() {
 		return transactionDate;
 	}
 
-	public void setTransactionDate(Date transactionDate) {
+	public void setTransactionDate(String transactionDate) {
 		this.transactionDate = transactionDate;
 	}
 

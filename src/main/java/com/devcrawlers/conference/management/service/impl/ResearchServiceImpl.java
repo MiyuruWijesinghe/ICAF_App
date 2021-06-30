@@ -1,6 +1,5 @@
 package com.devcrawlers.conference.management.service.impl;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,13 +41,10 @@ public class ResearchServiceImpl implements ResearchService {
 	@Autowired
 	private NotificationsService notificationsService;
 	
-	private Date formatDate(String date) {
+	private String formatDate(Date date) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		try {
-			return format.parse(date);
-		} catch (ParseException e) {
-			return null;
-		}
+		format.setLenient(false);
+		return format.format(date);
 	}
 	
 	private int generateId() {
@@ -122,11 +118,11 @@ public class ResearchServiceImpl implements ResearchService {
 		research.setId(generateId());
 		research.setName(researchAddResource.getName());
 		research.setDescription(researchAddResource.getDescription());
-		research.setPublishedDate(formatDate(researchAddResource.getPublishedDate()));
+		research.setPublishedDate(researchAddResource.getPublishedDate());
 		research.setDocumentURL(researchAddResource.getDocumentURL());
 		research.setStatus(CommonStatus.PENDING.toString());
 		research.setCreatedUser("MKW");
-		research.setCreatedDate(new Date());
+		research.setCreatedDate(formatDate(new Date()));
 		researchRepository.save(research);
 		return research.getId();
 	}
@@ -146,11 +142,11 @@ public class ResearchServiceImpl implements ResearchService {
 		Research research = isPresentResearch.get();
 		research.setName(researchUpdateResource.getName());
 		research.setDescription(researchUpdateResource.getDescription());
-		research.setPublishedDate(formatDate(researchUpdateResource.getPublishedDate()));
+		research.setPublishedDate(researchUpdateResource.getPublishedDate());
 		research.setDocumentURL(researchUpdateResource.getDocumentURL());
 		research.setStatus(CommonStatus.PENDING.toString());
 		research.setCreatedUser("MKW");
-		research.setCreatedDate(new Date());
+		research.setCreatedDate(formatDate(new Date()));
 		research.setRemarks(null);
 		research.setApprovedUser(null);
 		research.setApprovedDate(null);
@@ -184,7 +180,7 @@ public class ResearchServiceImpl implements ResearchService {
 		research.setStatus(CommonStatus.APPROVED.toString());
 		research.setRemarks(commonApproveRejectResource.getRemarks());
 		research.setApprovedUser(commonApproveRejectResource.getUserName());
-		research.setApprovedDate(new Date());
+		research.setApprovedDate(formatDate(new Date()));
 		research.setRejectedUser(null);
 		research.setRejectedDate(null);
 		researchRepository.save(research);
@@ -206,7 +202,7 @@ public class ResearchServiceImpl implements ResearchService {
 		research.setStatus(CommonStatus.REJECTED.toString());
 		research.setRemarks(commonApproveRejectResource.getRemarks());
 		research.setRejectedUser(commonApproveRejectResource.getUserName());
-		research.setRejectedDate(new Date());
+		research.setRejectedDate(formatDate(new Date()));
 		research.setApprovedUser(null);
 		research.setApprovedDate(null);
 		researchRepository.save(research);

@@ -1,7 +1,6 @@
 package com.devcrawlers.conference.management.service.impl;
 
 import java.math.BigDecimal;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -43,13 +42,10 @@ public class ConferenceDetailsServiceImpl implements ConferenceDetailsService {
 	@Autowired
 	private NotificationsService notificationsService;
 	
-	private Date formatDate(String date) {
+	private String formatDate(Date date) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		try {
-			return format.parse(date);
-		} catch (ParseException e) {
-			return null;
-		}
+		format.setLenient(false);
+		return format.format(date);
 	}
 	
 	private int generateId() {
@@ -125,13 +121,13 @@ public class ConferenceDetailsServiceImpl implements ConferenceDetailsService {
         conferenceDetails.setDescription(conferenceDetailsAddResource.getDescription());
         conferenceDetails.setConductor(conferenceDetailsAddResource.getConductor());
 		conferenceDetails.setVenue(conferenceDetailsAddResource.getVenue());
-		conferenceDetails.setDate(formatDate(conferenceDetailsAddResource.getDate()));
+		conferenceDetails.setDate(conferenceDetailsAddResource.getDate());
 		conferenceDetails.setStartTime(conferenceDetailsAddResource.getStartTime());
 		conferenceDetails.setEndTime(conferenceDetailsAddResource.getEndTime());
 		conferenceDetails.setPayment(new BigDecimal(conferenceDetailsAddResource.getPayment()));
 		conferenceDetails.setStatus(CommonStatus.PENDING.toString());
 		conferenceDetails.setCreatedUser("MKW");
-		conferenceDetails.setCreatedDate(new Date());
+		conferenceDetails.setCreatedDate(formatDate(new Date()));
 		conferenceDetailsRepository.save(conferenceDetails);
 		return conferenceDetails.getId();
 	}
@@ -153,13 +149,13 @@ public class ConferenceDetailsServiceImpl implements ConferenceDetailsService {
         conferenceDetails.setDescription(conferenceDetailsUpdateResource.getDescription());
         conferenceDetails.setConductor(conferenceDetailsUpdateResource.getConductor());
 		conferenceDetails.setVenue(conferenceDetailsUpdateResource.getVenue());
-		conferenceDetails.setDate(formatDate(conferenceDetailsUpdateResource.getDate()));
+		conferenceDetails.setDate(conferenceDetailsUpdateResource.getDate());
 		conferenceDetails.setStartTime(conferenceDetailsUpdateResource.getStartTime());
 		conferenceDetails.setEndTime(conferenceDetailsUpdateResource.getEndTime());
 		conferenceDetails.setPayment(new BigDecimal(conferenceDetailsUpdateResource.getPayment()));
 		conferenceDetails.setStatus(CommonStatus.PENDING.toString());
 		conferenceDetails.setCreatedUser("MKW");
-		conferenceDetails.setCreatedDate(new Date());
+		conferenceDetails.setCreatedDate(formatDate(new Date()));
 		conferenceDetails.setRemarks(null);
 		conferenceDetails.setApprovedUser(null);
 		conferenceDetails.setApprovedDate(null);
@@ -193,7 +189,7 @@ public class ConferenceDetailsServiceImpl implements ConferenceDetailsService {
 		conferenceDetails.setStatus(CommonStatus.APPROVED.toString());
 		conferenceDetails.setRemarks(commonApproveRejectResource.getRemarks());
 		conferenceDetails.setApprovedUser(commonApproveRejectResource.getUserName());
-		conferenceDetails.setApprovedDate(new Date());
+		conferenceDetails.setApprovedDate(formatDate(new Date()));
 		conferenceDetails.setRejectedUser(null);
 		conferenceDetails.setRejectedDate(null);
 		conferenceDetailsRepository.save(conferenceDetails);
@@ -215,7 +211,7 @@ public class ConferenceDetailsServiceImpl implements ConferenceDetailsService {
 		conferenceDetails.setStatus(CommonStatus.REJECTED.toString());
 		conferenceDetails.setRemarks(commonApproveRejectResource.getRemarks());
 		conferenceDetails.setRejectedUser(commonApproveRejectResource.getUserName());
-		conferenceDetails.setRejectedDate(new Date());
+		conferenceDetails.setRejectedDate(formatDate(new Date()));
 		conferenceDetails.setApprovedUser(null);
 		conferenceDetails.setApprovedDate(null);
 		conferenceDetailsRepository.save(conferenceDetails);

@@ -1,5 +1,6 @@
 package com.devcrawlers.conference.management.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,6 +41,11 @@ public class WorkshopsServiceImpl implements WorkshopsService {
 	@Autowired
 	private NotificationsService notificationsService;
 	
+	private String formatDate(Date date) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		format.setLenient(false);
+		return format.format(date);
+	}
 	
 	private int generateId() {
 		List<Workshops> workshopsList = workshopsRepository.findAll();
@@ -115,7 +121,7 @@ public class WorkshopsServiceImpl implements WorkshopsService {
 		workshops.setDocumentURL(workshopsAddResource.getDocumentURL());
 		workshops.setStatus(CommonStatus.PENDING.toString());
 		workshops.setCreatedUser("MKW");
-		workshops.setCreatedDate(new Date());
+		workshops.setCreatedDate(formatDate(new Date()));
 		workshopsRepository.save(workshops);
 		return workshops.getId();
 	}
@@ -138,7 +144,7 @@ public class WorkshopsServiceImpl implements WorkshopsService {
 		workshops.setDocumentURL(workshopsUpdateResource.getDocumentURL());
 		workshops.setStatus(CommonStatus.PENDING.toString());
 		workshops.setCreatedUser("MKW");
-		workshops.setCreatedDate(new Date());
+		workshops.setCreatedDate(formatDate(new Date()));
 		workshops.setRemarks(null);
 		workshops.setApprovedUser(null);
 		workshops.setApprovedDate(null);
@@ -172,7 +178,7 @@ public class WorkshopsServiceImpl implements WorkshopsService {
 		workshops.setStatus(CommonStatus.APPROVED.toString());
 		workshops.setRemarks(commonApproveRejectResource.getRemarks());
 		workshops.setApprovedUser(commonApproveRejectResource.getUserName());
-		workshops.setApprovedDate(new Date());
+		workshops.setApprovedDate(formatDate(new Date()));
 		workshops.setRejectedUser(null);
 		workshops.setRejectedDate(null);
 		workshopsRepository.save(workshops);
@@ -194,7 +200,7 @@ public class WorkshopsServiceImpl implements WorkshopsService {
 		workshops.setStatus(CommonStatus.REJECTED.toString());
 		workshops.setRemarks(commonApproveRejectResource.getRemarks());
 		workshops.setRejectedUser(commonApproveRejectResource.getUserName());
-		workshops.setRejectedDate(new Date());
+		workshops.setRejectedDate(formatDate(new Date()));
 		workshops.setApprovedUser(null);
 		workshops.setApprovedDate(null);
 		workshopsRepository.save(workshops);

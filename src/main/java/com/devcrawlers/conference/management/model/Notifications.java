@@ -1,7 +1,5 @@
 package com.devcrawlers.conference.management.model;
 
-import java.util.Date;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -19,7 +17,7 @@ public class Notifications {
 	
 	private String remarks;
 	
-	private Date createdDate;
+	private String createdDate;
 	
 	private String status;
 
@@ -63,11 +61,11 @@ public class Notifications {
 		this.remarks = remarks;
 	}
 
-	public Date getCreatedDate() {
+	public String getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(String createdDate) {
 		this.createdDate = createdDate;
 	}
 

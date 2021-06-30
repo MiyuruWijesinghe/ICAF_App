@@ -1,11 +1,12 @@
 package com.devcrawlers.conference.management.model;
 
 import java.math.BigDecimal;
-//import java.sql.Time;
-import java.util.Date;
+
 import javax.persistence.Transient;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Document(collection = "ConferenceDetails")
@@ -34,7 +35,7 @@ public class ConferenceDetails {
 	
 	private String venue;
 	
-	private Date date;
+	private String date;
 	
 	private String startTime;
 	
@@ -48,15 +49,15 @@ public class ConferenceDetails {
 
 	private String createdUser;
 	
-	private Date createdDate;
+	private String createdDate;
 	
 	private String approvedUser;
 	
-	private Date approvedDate;
+	private String approvedDate;
 	
 	private String rejectedUser;
 	
-	private Date rejectedDate;
+	private String rejectedDate;
 	
 	public Integer getId() {
 		return id;
@@ -106,11 +107,11 @@ public class ConferenceDetails {
 		this.venue = venue;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
@@ -162,11 +163,11 @@ public class ConferenceDetails {
 		this.createdUser = createdUser;
 	}
 
-	public Date getCreatedDate() {
+	public String getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(String createdDate) {
 		this.createdDate = createdDate;
 	}
 
@@ -178,11 +179,11 @@ public class ConferenceDetails {
 		this.approvedUser = approvedUser;
 	}
 
-	public Date getApprovedDate() {
+	public String getApprovedDate() {
 		return approvedDate;
 	}
 
-	public void setApprovedDate(Date approvedDate) {
+	public void setApprovedDate(String approvedDate) {
 		this.approvedDate = approvedDate;
 	}
 
@@ -194,11 +195,11 @@ public class ConferenceDetails {
 		this.rejectedUser = rejectedUser;
 	}
 
-	public Date getRejectedDate() {
+	public String getRejectedDate() {
 		return rejectedDate;
 	}
 
-	public void setRejectedDate(Date rejectedDate) {
+	public void setRejectedDate(String rejectedDate) {
 		this.rejectedDate = rejectedDate;
 	}
 	

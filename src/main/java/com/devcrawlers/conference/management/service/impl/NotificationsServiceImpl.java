@@ -1,5 +1,6 @@
 package com.devcrawlers.conference.management.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,6 +26,12 @@ public class NotificationsServiceImpl implements NotificationsService {
 	
 	@Autowired
 	private NotificationsRepository notificationsRepository;
+	
+	private String formatDate(Date date) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		format.setLenient(false);
+		return format.format(date);
+	}
 	
 	private int generateId() {
 		List<Notifications> notificationsList = notificationsRepository.findAll();
@@ -66,7 +73,7 @@ public class NotificationsServiceImpl implements NotificationsService {
 		notifications.setType(type);
 		notifications.setDescription(description);
 		notifications.setRemarks(remarks);
-		notifications.setCreatedDate(new Date());
+		notifications.setCreatedDate(formatDate(new Date()));
 		notifications.setStatus(status);
 		notificationsRepository.save(notifications);
 	}
