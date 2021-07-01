@@ -13,7 +13,7 @@ public interface WorkshopsRepository extends MongoRepository<Workshops, Integer>
 	
 	public List<Workshops> findByNameContaining(String name);
 
-	public List<Workshops> findByConferenceTrackId(int conferenceTracksId);
+	public List<Workshops> findByConferenceTrackIdAndStatus(int conferenceTracksId, String status);
 
 	public List<Workshops> findByConferenceTrackName(String conferenceTracksName);
 

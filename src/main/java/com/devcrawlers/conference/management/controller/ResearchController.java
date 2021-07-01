@@ -117,13 +117,15 @@ public class ResearchController {
 	/**
 	 * Gets the research by conference tracks id.
 	 *
-	 * @param conferenceTracksId - the conference tracks id
+	 * @param conferenceTracksId the conference tracks id
+	 * @param status the status
 	 * @return the research by conference tracks id
 	 */
-	@GetMapping(value = "/conference-tracks/{conferenceTracksId}")
-	public ResponseEntity<Object> getResearchByConferenceTracksId(@PathVariable(value = "conferenceTracksId", required = true) int conferenceTracksId) {
+	@GetMapping(value = "/conference-tracks/{conferenceTracksId}/status/{status}")
+	public ResponseEntity<Object> getResearchByConferenceTracksId(@PathVariable(value = "conferenceTracksId", required = true) int conferenceTracksId, 
+			@PathVariable(value = "status", required = true) String status) {
 		SuccessAndErrorDetailsResource responseMessage = new SuccessAndErrorDetailsResource();
-		List<Research> research = researchService.findByConferenceTracksId(conferenceTracksId);
+		List<Research> research = researchService.findByConferenceTracksIdAndStatus(conferenceTracksId, status);
 		if (!research.isEmpty()) {
 			return new ResponseEntity<>((Collection<Research>) research, HttpStatus.OK);
 		} else {

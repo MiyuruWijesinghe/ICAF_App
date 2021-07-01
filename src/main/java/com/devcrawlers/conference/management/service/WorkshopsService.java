@@ -19,7 +19,7 @@ public interface WorkshopsService {
 	
 	public List<Workshops> findByName(String name);
 	
-	public List<Workshops> findByConferenceTracksId(int conferenceTracksId);
+	public List<Workshops> findByConferenceTracksIdAndStatus(int conferenceTracksId, String status);
 	
 	public List<Workshops> findByConferenceTracksName(String conferenceTracksName);
 	

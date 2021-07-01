@@ -88,8 +88,8 @@ public class ResearchServiceImpl implements ResearchService {
 	}
 
 	@Override
-	public List<Research> findByConferenceTracksId(int conferenceTracksId) {
-		return researchRepository.findByConferenceTrackId(conferenceTracksId);
+	public List<Research> findByConferenceTracksIdAndStatus(int conferenceTracksId, String status) {
+		return researchRepository.findByConferenceTrackIdAndStatus(conferenceTracksId, status);
 	}
 
 	@Override

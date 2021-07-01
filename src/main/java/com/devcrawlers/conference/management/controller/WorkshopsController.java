@@ -118,12 +118,14 @@ public class WorkshopsController {
 	 * Gets the workshops by conference tracks id.
 	 *
 	 * @param conferenceTracksId - the conference tracks id
+	 * @param status - the status
 	 * @return the workshops by conference tracks id
 	 */
-	@GetMapping(value = "/conference-tracks/{conferenceTracksId}")
-	public ResponseEntity<Object> getWorkshopsByConferenceTracksId(@PathVariable(value = "conferenceTracksId", required = true) int conferenceTracksId) {
+	@GetMapping(value = "/conference-tracks/{conferenceTracksId}/status/{status}")
+	public ResponseEntity<Object> getWorkshopsByConferenceTracksId(@PathVariable(value = "conferenceTracksId", required = true) int conferenceTracksId, 
+			@PathVariable(value = "status", required = true) String status) {
 		SuccessAndErrorDetailsResource responseMessage = new SuccessAndErrorDetailsResource();
-		List<Workshops> workshops = workshopsService.findByConferenceTracksId(conferenceTracksId);
+		List<Workshops> workshops = workshopsService.findByConferenceTracksIdAndStatus(conferenceTracksId, status);
 		if (!workshops.isEmpty()) {
 			return new ResponseEntity<>((Collection<Workshops>) workshops, HttpStatus.OK);
 		} else {

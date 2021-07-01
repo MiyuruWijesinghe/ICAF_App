@@ -88,8 +88,8 @@ public class WorkshopsServiceImpl implements WorkshopsService {
 	}
 	
 	@Override
-	public List<Workshops> findByConferenceTracksId(int conferenceTracksId) {
-		return workshopsRepository.findByConferenceTrackId(conferenceTracksId);
+	public List<Workshops> findByConferenceTracksIdAndStatus(int conferenceTracksId, String status) {
+		return workshopsRepository.findByConferenceTrackIdAndStatus(conferenceTracksId, status);
 	}
 
 	@Override

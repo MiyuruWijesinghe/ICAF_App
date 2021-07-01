@@ -21,7 +21,7 @@ public interface ResearchService {
 	
 	public List<Research> findByName(String name);
 	
-	public List<Research> findByConferenceTracksId(int conferenceTracksId);
+	public List<Research> findByConferenceTracksIdAndStatus(int conferenceTracksId, String status);
 	
 	public List<Research> findByConferenceTracksName(String conferenceTracksName);
 	
