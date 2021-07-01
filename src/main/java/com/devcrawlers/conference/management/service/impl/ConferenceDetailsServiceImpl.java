@@ -21,9 +21,11 @@ import com.devcrawlers.conference.management.repository.ConferenceRepository;
 import com.devcrawlers.conference.management.resource.CommonApproveRejectResource;
 import com.devcrawlers.conference.management.resource.ConferenceDetailsAddResource;
 import com.devcrawlers.conference.management.resource.ConferenceDetailsUpdateResource;
+import com.devcrawlers.conference.management.security.jwt.AuthTokenFilter;
 import com.devcrawlers.conference.management.service.ConferenceDetailsService;
 import com.devcrawlers.conference.management.service.NotificationsService;
 import com.devcrawlers.conference.management.util.IdGenerator;
+
 
 @Component
 @Transactional(rollbackFor=Exception.class)
@@ -40,6 +42,9 @@ public class ConferenceDetailsServiceImpl implements ConferenceDetailsService {
 	
 	@Autowired
 	private NotificationsService notificationsService;
+	
+	@Autowired
+	private AuthTokenFilter authTokenFilter;
 	
 	private String formatDate(Date date) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -119,7 +124,7 @@ public class ConferenceDetailsServiceImpl implements ConferenceDetailsService {
         conferenceDetails.setTopic(conferenceDetailsAddResource.getTopic());
         conferenceDetails.setDescription(conferenceDetailsAddResource.getDescription());
 		conferenceDetails.setStatus(CommonStatus.PENDING.toString());
-		conferenceDetails.setCreatedUser("MKW");
+		conferenceDetails.setCreatedUser(authTokenFilter.getUsername());
 		conferenceDetails.setCreatedDate(formatDate(new Date()));
 		conferenceDetailsRepository.save(conferenceDetails);
 		return conferenceDetails.getId();
@@ -141,7 +146,7 @@ public class ConferenceDetailsServiceImpl implements ConferenceDetailsService {
 		conferenceDetails.setTopic(conferenceDetailsUpdateResource.getTopic());
         conferenceDetails.setDescription(conferenceDetailsUpdateResource.getDescription());
 		conferenceDetails.setStatus(CommonStatus.PENDING.toString());
-		conferenceDetails.setCreatedUser("MKW");
+		conferenceDetails.setCreatedUser(authTokenFilter.getUsername());
 		conferenceDetails.setCreatedDate(formatDate(new Date()));
 		conferenceDetails.setRemarks(null);
 		conferenceDetails.setApprovedUser(null);
@@ -175,7 +180,7 @@ public class ConferenceDetailsServiceImpl implements ConferenceDetailsService {
 		ConferenceDetails conferenceDetails = isPresentConferenceDetails.get();
 		conferenceDetails.setStatus(CommonStatus.APPROVED.toString());
 		conferenceDetails.setRemarks(commonApproveRejectResource.getRemarks());
-		conferenceDetails.setApprovedUser(commonApproveRejectResource.getUserName());
+		conferenceDetails.setApprovedUser(authTokenFilter.getUsername());
 		conferenceDetails.setApprovedDate(formatDate(new Date()));
 		conferenceDetails.setRejectedUser(null);
 		conferenceDetails.setRejectedDate(null);
@@ -197,7 +202,7 @@ public class ConferenceDetailsServiceImpl implements ConferenceDetailsService {
 		ConferenceDetails conferenceDetails = isPresentConferenceDetails.get();
 		conferenceDetails.setStatus(CommonStatus.REJECTED.toString());
 		conferenceDetails.setRemarks(commonApproveRejectResource.getRemarks());
-		conferenceDetails.setRejectedUser(commonApproveRejectResource.getUserName());
+		conferenceDetails.setRejectedUser(authTokenFilter.getUsername());
 		conferenceDetails.setRejectedDate(formatDate(new Date()));
 		conferenceDetails.setApprovedUser(null);
 		conferenceDetails.setApprovedDate(null);

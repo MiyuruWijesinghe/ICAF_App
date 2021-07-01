@@ -1,12 +1,8 @@
 package com.devcrawlers.conference.management.repository;
 
 import java.util.Optional;
-
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
-
-import com.devcrawlers.conference.management.model.User;
 import com.devcrawlers.conference.management.model.Users;
 
 @Repository
