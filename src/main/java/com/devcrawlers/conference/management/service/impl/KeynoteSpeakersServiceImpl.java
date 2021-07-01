@@ -19,6 +19,7 @@ import com.devcrawlers.conference.management.repository.KeynoteSpeakersRepositor
 import com.devcrawlers.conference.management.resource.CommonApproveRejectResource;
 import com.devcrawlers.conference.management.resource.KeynoteSpeakersAddResource;
 import com.devcrawlers.conference.management.resource.KeynoteSpeakersUpdateResource;
+import com.devcrawlers.conference.management.security.jwt.AuthTokenFilter;
 import com.devcrawlers.conference.management.service.KeynoteSpeakersService;
 import com.devcrawlers.conference.management.service.NotificationsService;
 import com.devcrawlers.conference.management.util.IdGenerator;
@@ -35,6 +36,9 @@ public class KeynoteSpeakersServiceImpl implements KeynoteSpeakersService {
 	
 	@Autowired
 	private NotificationsService notificationsService;
+	
+	@Autowired
+	private AuthTokenFilter authTokenFilter;
 	
 	private String formatDate(Date date) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -93,7 +97,7 @@ public class KeynoteSpeakersServiceImpl implements KeynoteSpeakersService {
         keynoteSpeakers.setDesignation(keynoteSpeakersAddResource.getDesignation());
         keynoteSpeakers.setImageURL(keynoteSpeakersAddResource.getImageURL());
         keynoteSpeakers.setStatus(CommonStatus.PENDING.toString());
-        keynoteSpeakers.setCreatedUser("MKW");
+        keynoteSpeakers.setCreatedUser(authTokenFilter.getUsername());
         keynoteSpeakers.setCreatedDate(formatDate(new Date()));
         keynoteSpeakersRepository.save(keynoteSpeakers);
 		return keynoteSpeakers.getId();
@@ -116,7 +120,7 @@ public class KeynoteSpeakersServiceImpl implements KeynoteSpeakersService {
         keynoteSpeakers.setDesignation(keynoteSpeakersUpdateResource.getDesignation());
         keynoteSpeakers.setImageURL(keynoteSpeakersUpdateResource.getImageURL());
         keynoteSpeakers.setStatus(CommonStatus.PENDING.toString());
-        keynoteSpeakers.setCreatedUser("MKW");
+        keynoteSpeakers.setCreatedUser(authTokenFilter.getUsername());
         keynoteSpeakers.setCreatedDate(formatDate(new Date()));
         keynoteSpeakers.setRemarks(null);
         keynoteSpeakers.setApprovedUser(null);
@@ -149,7 +153,7 @@ public class KeynoteSpeakersServiceImpl implements KeynoteSpeakersService {
 		KeynoteSpeakers keynoteSpeaker = isPresentKeynoteSpeaker.get();
 		keynoteSpeaker.setStatus(CommonStatus.APPROVED.toString());
 		keynoteSpeaker.setRemarks(commonApproveRejectResource.getRemarks());
-		keynoteSpeaker.setApprovedUser(commonApproveRejectResource.getUserName());
+		keynoteSpeaker.setApprovedUser(authTokenFilter.getUsername());
 		keynoteSpeaker.setApprovedDate(formatDate(new Date()));
 		keynoteSpeaker.setRejectedUser(null);
 		keynoteSpeaker.setRejectedDate(null);
@@ -171,7 +175,7 @@ public class KeynoteSpeakersServiceImpl implements KeynoteSpeakersService {
 		KeynoteSpeakers keynoteSpeaker = isPresentKeynoteSpeaker.get();
 		keynoteSpeaker.setStatus(CommonStatus.REJECTED.toString());
 		keynoteSpeaker.setRemarks(commonApproveRejectResource.getRemarks());
-		keynoteSpeaker.setRejectedUser(commonApproveRejectResource.getUserName());
+		keynoteSpeaker.setRejectedUser(authTokenFilter.getUsername());
 		keynoteSpeaker.setRejectedDate(formatDate(new Date()));
 		keynoteSpeaker.setApprovedUser(null);
 		keynoteSpeaker.setApprovedDate(null);

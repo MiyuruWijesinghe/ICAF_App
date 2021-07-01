@@ -19,6 +19,7 @@ import com.devcrawlers.conference.management.repository.ConferenceTracksReposito
 import com.devcrawlers.conference.management.resource.CommonApproveRejectResource;
 import com.devcrawlers.conference.management.resource.ConferenceTracksAddResource;
 import com.devcrawlers.conference.management.resource.ConferenceTracksUpdateResource;
+import com.devcrawlers.conference.management.security.jwt.AuthTokenFilter;
 import com.devcrawlers.conference.management.service.ConferenceTracksService;
 import com.devcrawlers.conference.management.service.NotificationsService;
 import com.devcrawlers.conference.management.util.IdGenerator;
@@ -35,6 +36,9 @@ public class ConferenceTracksServiceImpl implements ConferenceTracksService {
 	
 	@Autowired
 	private NotificationsService notificationsService;
+	
+	@Autowired
+	private AuthTokenFilter authTokenFilter;
 	
 	private String formatDate(Date date) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -91,7 +95,7 @@ public class ConferenceTracksServiceImpl implements ConferenceTracksService {
         conferenceTrack.setName(conferenceTracksAddResource.getName());
         conferenceTrack.setImageURL(conferenceTracksAddResource.getImageURL());
 		conferenceTrack.setStatus(CommonStatus.PENDING.toString());
-		conferenceTrack.setCreatedUser("MKW");
+		conferenceTrack.setCreatedUser(authTokenFilter.getUsername());
 		conferenceTrack.setCreatedDate(formatDate(new Date()));
 		conferenceTracksRepository.save(conferenceTrack);
 		return conferenceTrack.getId();
@@ -112,7 +116,7 @@ public class ConferenceTracksServiceImpl implements ConferenceTracksService {
 		conferenceTrack.setName(conferenceTracksUpdateResource.getName());
 		conferenceTrack.setImageURL(conferenceTracksUpdateResource.getImageURL());
 		conferenceTrack.setStatus(CommonStatus.PENDING.toString());
-		conferenceTrack.setCreatedUser("MKW");
+		conferenceTrack.setCreatedUser(authTokenFilter.getUsername());
 		conferenceTrack.setCreatedDate(formatDate(new Date()));
 		conferenceTrack.setRemarks(null);
 		conferenceTrack.setApprovedUser(null);
@@ -145,7 +149,7 @@ public class ConferenceTracksServiceImpl implements ConferenceTracksService {
 		ConferenceTracks conferenceTrack = isPresentConferenceTrack.get();
 		conferenceTrack.setStatus(CommonStatus.APPROVED.toString());
 		conferenceTrack.setRemarks(commonApproveRejectResource.getRemarks());
-		conferenceTrack.setApprovedUser(commonApproveRejectResource.getUserName());
+		conferenceTrack.setApprovedUser(authTokenFilter.getUsername());
 		conferenceTrack.setApprovedDate(formatDate(new Date()));
 		conferenceTrack.setRejectedUser(null);
 		conferenceTrack.setRejectedDate(null);
@@ -167,7 +171,7 @@ public class ConferenceTracksServiceImpl implements ConferenceTracksService {
 		ConferenceTracks conferenceTrack = isPresentConferenceTrack.get();
 		conferenceTrack.setStatus(CommonStatus.REJECTED.toString());
 		conferenceTrack.setRemarks(commonApproveRejectResource.getRemarks());
-		conferenceTrack.setRejectedUser(commonApproveRejectResource.getUserName());
+		conferenceTrack.setRejectedUser(authTokenFilter.getUsername());
 		conferenceTrack.setRejectedDate(formatDate(new Date()));
 		conferenceTrack.setApprovedUser(null);
 		conferenceTrack.setApprovedDate(null);

@@ -21,6 +21,7 @@ import com.devcrawlers.conference.management.repository.ResearchRepository;
 import com.devcrawlers.conference.management.resource.CommonApproveRejectResource;
 import com.devcrawlers.conference.management.resource.ResearchAddResource;
 import com.devcrawlers.conference.management.resource.ResearchUpdateResource;
+import com.devcrawlers.conference.management.security.jwt.AuthTokenFilter;
 import com.devcrawlers.conference.management.service.NotificationsService;
 import com.devcrawlers.conference.management.service.ResearchService;
 import com.devcrawlers.conference.management.util.IdGenerator;
@@ -40,6 +41,9 @@ public class ResearchServiceImpl implements ResearchService {
 	
 	@Autowired
 	private NotificationsService notificationsService;
+	
+	@Autowired
+	private AuthTokenFilter authTokenFilter;
 	
 	private String formatDate(Date date) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -121,7 +125,7 @@ public class ResearchServiceImpl implements ResearchService {
 		research.setPublishedDate(researchAddResource.getPublishedDate());
 		research.setDocumentURL(researchAddResource.getDocumentURL());
 		research.setStatus(CommonStatus.PENDING.toString());
-		research.setCreatedUser("MKW");
+		research.setCreatedUser(authTokenFilter.getUsername());
 		research.setCreatedDate(formatDate(new Date()));
 		researchRepository.save(research);
 		return research.getId();
@@ -145,7 +149,7 @@ public class ResearchServiceImpl implements ResearchService {
 		research.setPublishedDate(researchUpdateResource.getPublishedDate());
 		research.setDocumentURL(researchUpdateResource.getDocumentURL());
 		research.setStatus(CommonStatus.PENDING.toString());
-		research.setCreatedUser("MKW");
+		research.setCreatedUser(authTokenFilter.getUsername());
 		research.setCreatedDate(formatDate(new Date()));
 		research.setRemarks(null);
 		research.setApprovedUser(null);
@@ -179,7 +183,7 @@ public class ResearchServiceImpl implements ResearchService {
 		Research research = isPresentResearch.get();
 		research.setStatus(CommonStatus.APPROVED.toString());
 		research.setRemarks(commonApproveRejectResource.getRemarks());
-		research.setApprovedUser(commonApproveRejectResource.getUserName());
+		research.setApprovedUser(authTokenFilter.getUsername());
 		research.setApprovedDate(formatDate(new Date()));
 		research.setRejectedUser(null);
 		research.setRejectedDate(null);
@@ -201,7 +205,7 @@ public class ResearchServiceImpl implements ResearchService {
 		Research research = isPresentResearch.get();
 		research.setStatus(CommonStatus.REJECTED.toString());
 		research.setRemarks(commonApproveRejectResource.getRemarks());
-		research.setRejectedUser(commonApproveRejectResource.getUserName());
+		research.setRejectedUser(authTokenFilter.getUsername());
 		research.setRejectedDate(formatDate(new Date()));
 		research.setApprovedUser(null);
 		research.setApprovedDate(null);

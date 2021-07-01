@@ -21,6 +21,7 @@ import com.devcrawlers.conference.management.repository.WorkshopsRepository;
 import com.devcrawlers.conference.management.resource.CommonApproveRejectResource;
 import com.devcrawlers.conference.management.resource.WorkshopsAddResource;
 import com.devcrawlers.conference.management.resource.WorkshopsUpdateResource;
+import com.devcrawlers.conference.management.security.jwt.AuthTokenFilter;
 import com.devcrawlers.conference.management.service.NotificationsService;
 import com.devcrawlers.conference.management.service.WorkshopsService;
 import com.devcrawlers.conference.management.util.IdGenerator;
@@ -40,6 +41,9 @@ public class WorkshopsServiceImpl implements WorkshopsService {
 	
 	@Autowired
 	private NotificationsService notificationsService;
+	
+	@Autowired
+	private AuthTokenFilter authTokenFilter;
 	
 	private String formatDate(Date date) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -126,7 +130,7 @@ public class WorkshopsServiceImpl implements WorkshopsService {
 		workshops.setStartTime(workshopsAddResource.getStartTime());
 		workshops.setEndTime(workshopsAddResource.getEndTime());
 		workshops.setStatus(CommonStatus.PENDING.toString());
-		workshops.setCreatedUser("MKW");
+		workshops.setCreatedUser(authTokenFilter.getUsername());
 		workshops.setCreatedDate(formatDate(new Date()));
 		workshopsRepository.save(workshops);
 		return workshops.getId();
@@ -155,7 +159,7 @@ public class WorkshopsServiceImpl implements WorkshopsService {
 		workshops.setStartTime(workshopsUpdateResource.getStartTime());
 		workshops.setEndTime(workshopsUpdateResource.getEndTime());
 		workshops.setStatus(CommonStatus.PENDING.toString());
-		workshops.setCreatedUser("MKW");
+		workshops.setCreatedUser(authTokenFilter.getUsername());
 		workshops.setCreatedDate(formatDate(new Date()));
 		workshops.setRemarks(null);
 		workshops.setApprovedUser(null);
@@ -189,7 +193,7 @@ public class WorkshopsServiceImpl implements WorkshopsService {
 		Workshops workshops = isPresentWorkshop.get();
 		workshops.setStatus(CommonStatus.APPROVED.toString());
 		workshops.setRemarks(commonApproveRejectResource.getRemarks());
-		workshops.setApprovedUser(commonApproveRejectResource.getUserName());
+		workshops.setApprovedUser(authTokenFilter.getUsername());
 		workshops.setApprovedDate(formatDate(new Date()));
 		workshops.setRejectedUser(null);
 		workshops.setRejectedDate(null);
@@ -211,7 +215,7 @@ public class WorkshopsServiceImpl implements WorkshopsService {
 		Workshops workshops = isPresentWorkshop.get();
 		workshops.setStatus(CommonStatus.REJECTED.toString());
 		workshops.setRemarks(commonApproveRejectResource.getRemarks());
-		workshops.setRejectedUser(commonApproveRejectResource.getUserName());
+		workshops.setRejectedUser(authTokenFilter.getUsername());
 		workshops.setRejectedDate(formatDate(new Date()));
 		workshops.setApprovedUser(null);
 		workshops.setApprovedDate(null);
